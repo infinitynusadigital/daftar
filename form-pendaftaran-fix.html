@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Formulir Pendaftaran Internet - covernet.id</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <style>
+    body { background-color: #0e141b; color: white; font-family: 'Inter', sans-serif; }
+    input, textarea, select {
+      background-color: #111827;
+      color: white;
+      border: 1px solid #f97316;
+      border-radius: 0.5rem;
+      padding: 0.75rem;
+      width: 100%;
+    }
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: #fb923c;
+      box-shadow: 0 0 0 2px #fb923c40;
+    }
+    button {
+      background-color: #f97316;
+      color: white;
+      font-weight: bold;
+      padding: 0.75rem;
+      border-radius: 0.5rem;
+      width: 100%;
+      transition: background 0.2s;
+    }
+    button:hover { background-color: #ea580c; }
+  </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+  <div class="w-full max-w-md bg-[#111827] p-6 rounded-2xl shadow-xl border border-gray-700">
+    <h2 class="text-2xl font-bold text-center mb-2 text-orange-400">Formulir Pendaftaran Internet</h2>
+    <p class="text-center text-sm mb-6 text-gray-400">PT Infinity Nusa Digital</p>
+
+    <!-- FORM TANPA FETCH, LANGSUNG KE GOOGLE SCRIPT -->
+    <form action="https://script.google.com/macros/s/AKfycbylNUlbItKD7xPNIfTFKc6skrAwHkeAemw2J8s0_2ybO0Tc-wp8kLFKHQKUFjk6TDrR/exec"
+          method="POST"
+          target="_self"
+          onsubmit="return showSuccessMessage()"
+          class="space-y-4">
+
+      <div>
+        <label>Nama (Usaha / Pemilik)</label>
+        <input type="text" name="Nama (Usaha)" required placeholder="Nama usaha / pemilik" />
+      </div>
+
+      <div>
+        <label>Alamat Instalasi</label>
+        <textarea name="Alamat instalasi" required placeholder="Jl. Contoh No. 123, Kota"></textarea>
+      </div>
+
+      <div>
+        <label>No. Telp / WA</label>
+        <input type="text" name="No Telp / WA" required placeholder="+62..." />
+      </div>
+
+      <div>
+        <label>Email</label>
+        <input type="email" name="Email" required placeholder="email@domain.com" />
+      </div>
+
+      <div>
+        <label>Kapasitas Paket</label>
+        <select name="Kapasitas" required class="bg-[#1f2937] text-white">
+          <option value="">Pilih kapasitas</option>
+          <option>10 Mbps</option>
+          <option>20 Mbps</option>
+          <option>50 Mbps</option>
+          <option>100 Mbps</option>
+        </select>
+      </div>
+
+      <div>
+        <label>Share Lokasi (Link Google Maps)</label>
+        <input type="url" name="Share lokasi" placeholder="https://goo.gl/maps/..." />
+      </div>
+
+      <div>
+        <label>Instalasi</label>
+        <input type="text" name="Instalasi" placeholder="Disesuaikan" />
+      </div>
+
+      <button type="submit">Kirim Pendaftaran</button>
+    </form>
+
+    <p class="text-xs text-center text-gray-500 mt-6">
+      © 2025 PT Infinity Nusa Digital – Business
+    </p>
+  </div>
+
+  <script>
+    function showSuccessMessage() {
+      Swal.fire({
+        icon: 'success',
+        title: 'Pendaftaran Berhasil!',
+        text: 'Data Anda telah terkirim ke sistem kami.',
+        confirmButtonColor: '#f97316',
+        background: '#1f2937',
+        color: '#fff',
+      });
+      return true; // tetap kirim form
+    }
+  </script>
+</body>
+</html>
