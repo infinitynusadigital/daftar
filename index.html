@@ -95,7 +95,7 @@ document.getElementById('bnetfitForm').addEventListener('submit', async function
   form.submit();
 
   // Prepare payload for Apps Script (base64)
-  const googleScriptURL = "https://script.google.com/macros/s/AKfycbwqaEL6VhDFDwSRrBZtfKgyCUdpuR1DwqBjNIT5UmLBPn7zo17p8o5HkoTXKtJ2lc2XHg/exec"; // <-- GANTI
+  const googleScriptURL = "https://script.google.com/macros/s/AKfycbzAnKyI0xCSzhEPuFI4b9rWCwvSw8sTio8SH-wZ-ih8FckAWN1krecPmh6_Ij5fqHfs3A/exec"; // <-- GANTI
   const maxSize = 6 * 1024 * 1024; // 6MB
   if(file && file.size > maxSize){
     Swal.fire({icon:'error', title:'File terlalu besar', text: 'Max 6 MB untuk file KTP.'});
