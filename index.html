@@ -39,7 +39,7 @@
     <p class="text-center text-sm mb-6 text-gray-400">🔹 KARANGGAN HOTSPOT 🔹 by Covernet.id</p>
 
     <!-- FORM TANPA FETCH, LANGSUNG KE GOOGLE SCRIPT -->
-    <form action="https://script.google.com/macros/s/AKfycbylNUlbItKD7xPNIfTFKc6skrAwHkeAemw2J8s0_2ybO0Tc-wp8kLFKHQKUFjk6TDrR/exec"
+    <form action="https://script.google.com/macros/s/AKfycbyVylLRAQZOXz2-uFzOW5EulJA_2Ak4pHMse9xQ3FNey1SX36HIQIrTrvTTJvEaVTUp/exec"
           method="POST"
           target="_self"
           onsubmit="return showSuccessMessage()"
@@ -83,8 +83,9 @@
       </div>
 
       <div>
-        <label>Instalasi</label>
-        <input type="text" name="Instalasi" placeholder="Disesuaikan" />
+        <label>Upload Foto KTP</label>
+        <input type="file" name="Foto KTP" accept="image/*" required />
+        <p class="text-xs text-gray-400 mt-1">Format: JPG/PNG (maks 5MB)</p>
       </div>
 
       <button type="submit">👉 Kirim Pendaftaran</button>
