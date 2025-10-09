@@ -81,7 +81,7 @@ document.getElementById("formKTP").addEventListener("submit", async function(e) 
     formData.append("fileName", file.name);
 
     try {
-      const res = await fetch("https://script.google.com/macros/s/AKfycbxJfA3-Humpk1EqcCpkWUpBDs8rmph5OhehVdc5rS8NH1-L_iF35a6KXX4v10YyyItYMQ/exec", {
+      const res = await fetch("https://script.google.com/macros/s/AKfycbxSnNskdYLR1dCh-ttyJ1FWsunykDOTB_nchmYlTNHU6cRzKasw_TLAdTrgcM-cVX2HnQ/exec", {
         method: "POST",
         body: formData
       });
