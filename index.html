@@ -1,186 +1,79 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>✅ Pendaftaran Internet - covernet.id</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <style>
-    body { background-color: #0e141b; color: white; font-family: 'Inter', sans-serif; }
-    input, textarea, select {
-      background-color: #111827;
-      color: white;
-      border: 1px solid #f97316;
-      border-radius: 0.5rem;
-      padding: 0.75rem;
-      width: 100%;
-    }
-    input:focus, textarea:focus, select:focus {
-      outline: none;
-      border-color: #fb923c;
-      box-shadow: 0 0 0 2px #fb923c40;
-    }
-    button {
-      background-color: #f97316;
-      color: white;
-      font-weight: bold;
-      padding: 0.75rem;
-      border-radius: 0.5rem;
-      width: 100%;
-      transition: background 0.2s;
-    }
-    button:hover { background-color: #ea580c; }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Form Pendaftaran Internet Business</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
-<body class="flex items-center justify-center min-h-screen p-4">
-  <div class="w-full max-w-md bg-[#111827] p-6 rounded-2xl shadow-xl border border-gray-700">
-    <h2 class="text-2xl font-bold text-center mb-2 text-orange-400">Pendaftaran Internet</h2>
-    <p class="text-center text-sm mb-6 text-gray-400">🔹 KARANGGAN HOTSPOT 🔹 by Covernet.id</p>
-
-    <!-- FORM TANPA FETCH, LANGSUNG KE GOOGLE SCRIPT -->
-    <form action="https://script.google.com/macros/s/AKfycbxQAK3m2SFNbDe1fBA9bi7Vd30S4r5b1szXSFYsrUQJONnBCc6LNSUEY6pBcY_l1gt8/exec"
-          method="POST"
-          target="_self"
-          onsubmit="return showSuccessMessage()"
-          class="space-y-4">
-
-      <div>
-        <label>✅ Nama (Usaha / Pemilik)</label>
-        <input type="text" name="Nama (Usaha)" required placeholder="Nama Lengkap / pemilik" />
-      </div>
-
-      <div>
-        <label>📌 Alamat Instalasi</label>
-        <textarea name="Alamat instalasi" required placeholder="Jl. contoh jalan No. 123, Kota"></textarea>
-      </div>
-
-      <div>
-        <label>✅ No. Telp / WA</label>
-        <input type="text" name="No Telp / WA" required placeholder="+62..." />
-      </div>
-
-      <div>
-        <label>✅ Email</label>
-        <input type="email" name="Email" required placeholder="email@gmail.com" />
-      </div>
-
-      <div>
-        <label> Kapasitas Paket</label>
-        <select name="Kapasitas" required class="bg-[#1f2937] text-white">
+<body class="bg-gray-900 text-gray-100 min-h-screen flex items-center justify-center">
+  <div class="w-full max-w-xl bg-gray-800 p-6 rounded-2xl shadow-lg">
+    <h2 class="text-2xl font-semibold text-orange-400 mb-4 text-center">Form Pendaftaran Internet Bnetfit Business</h2>
+    <form id="bnetfitForm" class="space-y-4">
+      <input type="text" name="Nama (Usaha)" placeholder="Nama (Usaha)" required class="w-full p-2 rounded bg-gray-700 text-white" />
+      <input type="text" name="Alamat Instalasi" placeholder="Alamat Instalasi" required class="w-full p-2 rounded bg-gray-700 text-white" />
+      <input type="text" name="No Telp/WA" placeholder="No Telp/WA" required class="w-full p-2 rounded bg-gray-700 text-white" />
+      <input type="email" name="Email" placeholder="Email" required class="w-full p-2 rounded bg-gray-700 text-white" />
+      <select name="Kapasitas" required class="w-full p-2 rounded bg-gray-700 text-orange-400 font-medium">
           <option value="">👍 Pilih kapasitas</option>
           <option>8 Mbps |Rp.120.000</option>
           <option>10 Mbps|Rp.150.000</option>
           <option>20 Mbps|Rp.180.000</option>
           <option>30 Mbps|Rp.220.000 </option>
           <option>50 Mbps|Rp.300.000 </option>
-        </select>
-      </div>
-
-      <div>
-        <label>Share Lokasi (Link Google Maps)</label>
-        <input type="url" name="Share lokasi" placeholder="https://goo.gl/maps/..." />
-      </div>
-
-      <div>
-        <label>Upload Foto KTP</label>
-        <input type="file" id="FotoKTP" name="FotoKTP" accept="image/*" required />
-        <p class="text-xs text-gray-400 mt-1">Format: JPG/PNG (maks 5MB)</p>
-      </div>
-
-      <button type="submit">👉 Kirim Pendaftaran</button>
+      </select>
+      <input type="text" name="Sharelokasi" placeholder="Link Share Lokasi" required class="w-full p-2 rounded bg-gray-700 text-white" />
+      <input type="text" name="Instalasi" placeholder="Instalasi (disesuaikan)" class="w-full p-2 rounded bg-gray-700 text-white" />
+      <label class="block text-sm text-orange-300">Upload Foto KTP:</label>
+      <input type="file" id="FotoKTP" name="FotoKTP" accept="image/*" required class="w-full p-2 bg-gray-700 rounded text-white" />
+      <button type="submit" class="w-full bg-orange-500 hover:bg-orange-600 p-2 rounded font-semibold text-white transition">Kirim Pendaftaran</button>
     </form>
-
-    <p class="text-xs text-center text-gray-500 mt-6">
-      © 2025 PT Infinity Nusa Digital – Business Covernet.id
-    </p>
   </div>
 
-  <script>
-    const form = document.getElementById('bnetfitForm');
-
+<script>
+const form = document.getElementById('bnetfitForm');
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
-
-  // ganti URL ini dengan URL Web App Apps Script kamu
-  const googleScriptURL = "https://script.google.com/macros/s/AKfycbz12345XYZ/exec"; // <- GANTI
-  const formSubmitURL  = "https://formsubmit.co/ajax/irfann.sugianto@gmail.com";    // tetap FormSubmit untuk email + lampiran
+  const googleScriptURL = "https://script.google.com/macros/s/AKfycbwyaBJ7i58y4lRKBGW6b3W0sR35ZeqcABgEzAfXZXgasosd-Bn-KBKTyW0dOH5hKPgHqQ/exec";
+  const formSubmitURL = "https://formsubmit.co/ajax/irfann.sugianto@gmail.com";
 
   try {
-    // ambil file KTP
-    const fileInput = document.getElementById('FotoKTP') || form.querySelector('input[name="FotoKTP"]') || form.querySelector('input[name="Foto KTP"]');
-    const file = fileInput && fileInput.files && fileInput.files[0];
-
-    // batasi ukuran (rekomendasi): maksimal 6 MB (base64 akan tambah ~33%)
-    if (file && file.size > 6 * 1024 * 1024) {
-      Swal.fire({ icon: 'error', title: 'File terlalu besar', text: 'Maksimal file KTP ~6 MB. Kompres atau pilih file lebih kecil.'});
-      return;
-    }
-
-    // baca file sebagai base64 (jika ada)
+    const fileInput = document.getElementById('FotoKTP');
+    const file = fileInput.files[0];
     let ktp_base64 = "";
     if (file) {
       ktp_base64 = await new Promise((resolve, reject) => {
         const reader = new FileReader();
-        reader.onload = () => {
-          // hasil bentuk "data:<mime>;base64,<data>"
-          const result = reader.result;
-          const parts = result.split(',');
-          resolve(parts[1] || "");
-        };
-        reader.onerror = () => reject("Gagal membaca file KTP");
+        reader.onload = () => resolve(reader.result.split(',')[1]);
+        reader.onerror = () => reject("Gagal membaca file");
         reader.readAsDataURL(file);
       });
     }
 
-    // kumpulkan field form (kecuali file) ke object
     const fd = new FormData(form);
     const payload = {};
-    fd.forEach((value, key) => {
-      // jangan include file input
-      if (key !== "FotoKTP" && key !== "Foto KTP") payload[key] = value;
-    });
+    fd.forEach((v,k)=>{ if(k!=='FotoKTP') payload[k]=v; });
+    payload.ktp_base64 = ktp_base64;
+    payload.ktp_name = file.name;
+    payload.ktp_type = file.type;
 
-    // tambahkan data KTP base64 untuk Apps Script
-    if (file) {
-      payload.ktp_base64 = ktp_base64;
-      payload.ktp_name = file.name;
-      payload.ktp_type = file.type || "image/jpeg";
-    }
+    const res1 = await fetch(googleScriptURL, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
+    const j1 = await res1.json();
+    if(!res1.ok || j1.status!=="success") throw new Error(j1.message||"Gagal simpan ke Sheet");
 
-    // 1) Kirim ke Google Apps Script (JSON)
-    const r1 = await fetch(googleScriptURL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    });
-
-    const j1 = await r1.json();
-    if (!r1.ok || j1.status !== "success") {
-      throw new Error("Gagal simpan ke Google Sheet/Drive: " + (j1.message || JSON.stringify(j1)));
-    }
-
-    // 2) Kirim ke FormSubmit (untuk menerima email + lampiran)
     const fd2 = new FormData();
-    fd.forEach((v, k) => fd2.append(k, v));
-    if (file) fd2.append('FotoKTP', file, file.name);
+    fd.forEach((v,k)=>fd2.append(k,v));
+    fd2.append('FotoKTP', file, file.name);
+    await fetch(formSubmitURL, {method:'POST', body: fd2});
 
-    const r2 = await fetch(formSubmitURL, { method: 'POST', body: fd2 });
-    if (!r2.ok) {
-      // FormSubmit kadang mengembalikan status 200/204; tapi periksa
-      throw new Error("Gagal kirim ke FormSubmit (email).");
-    }
-
-    // sukses
-    Swal.fire({ icon: 'success', title: 'Pendaftaran Berhasil', text: 'Data & KTP berhasil dikirim.', confirmButtonColor: '#f97316', background:'#1f2937', color:'#fff' });
+    Swal.fire({icon:'success',title:'Berhasil',text:'Pendaftaran berhasil disimpan.',background:'#1f2937',color:'#fff'});
     form.reset();
-
-  } catch (err) {
+  } catch(err){
     console.error(err);
-    Swal.fire({ icon: 'error', title: 'Gagal mengirim', text: String(err), confirmButtonColor: '#f97316', background:'#1f2937', color:'#fff' });
+    Swal.fire({icon:'error',title:'Gagal',text:String(err),background:'#1f2937',color:'#fff'});
   }
 });
-
-  </script>
+</script>
 </body>
 </html>
