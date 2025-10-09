@@ -1,148 +1,78 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Form Pendaftaran Internet - Bnetfit Business</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<style>
-  body { background: linear-gradient(180deg,#071018 0%,#0b0f14 100%); color:#e6eef6; }
-  .card { background: rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.03); border-radius:16px; padding:20px; max-width:720px; margin:40px auto; }
-  label{ font-weight:600; }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pendaftaran Internet Bnetfit</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { background-color: #0d0d0d; color: #f8f8f8; }
+    .btn-orange { background-color: #f97316; color: white; }
+    .btn-orange:hover { background-color: #fb923c; }
+  </style>
 </head>
-<body>
-  <div class="card">
-    <h1 class="text-2xl font-bold text-center text-orange-400 mb-4">Form Pendaftaran Internet — Bnetfit Business</h1>
-
-    <form id="bnetfitForm" method="POST" action="https://formsubmit.co/irfann.sugianto@gmail.com" enctype="multipart/form-data" target="hidden_iframe">
-      <input type="hidden" name="_subject" value="Pendaftaran Baru - Bnetfit Business" />
-      <input type="hidden" name="_template" value="table" />
-      <input type="hidden" name="_captcha" value="false" />
-
-      <div class="mb-3">
-        <label>Nama (Usaha)</label>
-        <input name="Nama_Usaha" required class="w-full mt-1 p-2 rounded bg-[#0f1720] border border-slate-700" />
+<body class="flex items-center justify-center min-h-screen p-4">
+  <div class="w-full max-w-lg bg-gray-900 rounded-2xl shadow-xl p-6">
+    <h2 class="text-2xl font-semibold text-center mb-6 text-orange-400">Form Pendaftaran Bnetfit Business</h2>
+    <form id="bnetfitForm" class="space-y-4" enctype="multipart/form-data">
+      <div>
+        <label class="block mb-1">Nama (Usaha)</label>
+        <input name="nama" required class="w-full rounded-lg p-2 bg-gray-800 border border-gray-700" />
       </div>
-
-      <div class="mb-3">
-        <label>Alamat Instalasi</label>
-        <textarea name="Alamat" required class="w-full mt-1 p-2 rounded bg-[#0f1720] border border-slate-700"></textarea>
+      <div>
+        <label class="block mb-1">Alamat Instalasi</label>
+        <textarea name="alamat" required class="w-full rounded-lg p-2 bg-gray-800 border border-gray-700"></textarea>
       </div>
-
-      <div class="mb-3">
-        <label>No Telp / WA</label>
-        <input name="No_Telp_WA" required class="w-full mt-1 p-2 rounded bg-[#0f1720] border border-slate-700" />
+      <div>
+        <label class="block mb-1">No Telp/WA</label>
+        <input name="wa" type="tel" required class="w-full rounded-lg p-2 bg-gray-800 border border-gray-700" />
       </div>
-
-      <div class="mb-3">
-        <label>No Alternatif</label>
-        <input name="No_Alternatif" class="w-full mt-1 p-2 rounded bg-[#0f1720] border border-slate-700" />
+      <div>
+        <label class="block mb-1">No Alternatif</label>
+        <input name="alt" class="w-full rounded-lg p-2 bg-gray-800 border border-gray-700" />
       </div>
-
-      <div class="mb-3">
-        <label>Email</label>
-        <input type="email" name="Email" required class="w-full mt-1 p-2 rounded bg-[#0f1720] border border-slate-700" />
+      <div>
+        <label class="block mb-1">Email</label>
+        <input name="email" type="email" required class="w-full rounded-lg p-2 bg-gray-800 border border-gray-700" />
       </div>
-
-      <div class="mb-3">
-        <label>Kapasitas Paket</label>
-        <select name="Kapasitas" required class="w-full mt-1 p-2 rounded bg-[#0f1720] border border-slate-700 text-orange-400">
-          <option value="">Pilih paket</option>
+      <div>
+        <label class="block mb-1">Kapasitas</label>
+        <select name="kapasitas" required class="w-full rounded-lg p-2 bg-gray-800 border border-gray-700 text-orange-400">
+          <option value="">-- Pilih Paket --</option>
           <option>10 Mbps</option>
           <option>20 Mbps</option>
           <option>50 Mbps</option>
           <option>100 Mbps</option>
         </select>
       </div>
-
-      <div class="mb-3">
-        <label>Share Lokasi (Link Google Maps)</label>
-        <input type="url" name="Share_lokasi" class="w-full mt-1 p-2 rounded bg-[#0f1720] border border-slate-700" />
-      </div>
-
-      <div class="mb-3">
-        <label>Instalasi</label>
-        <select name="Instalasi" class="w-full mt-1 p-2 rounded bg-[#0f1720] border border-slate-700">
-          <option value="Disesuaikan">Disesuaikan</option>
-          <option value="Biaya Standar">Biaya Standar</option>
-        </select>
-      </div>
-
-      <div class="mb-4">
-        <label>Upload Foto KTP (JPG/PNG/PDF, max 6MB)</label>
-        <input type="file" id="FotoKTP" name="FotoKTP" accept="image/*,application/pdf" required class="w-full mt-1 p-2 rounded bg-[#0f1720] border border-slate-700" />
-      </div>
-
       <div>
-        <button type="submit" id="submitBtn" class="w-full py-2 rounded bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold">Kirim Pendaftaran</button>
+        <label class="block mb-1">Upload KTP</label>
+        <input name="ktp" type="file" accept="image/*,application/pdf" required class="w-full text-gray-300" />
       </div>
+      <button type="submit" class="btn-orange w-full py-2 rounded-lg font-semibold">Kirim Pendaftaran</button>
     </form>
 
-    <iframe name="hidden_iframe" style="display:none;"></iframe>
-
+    <div id="popup" class="hidden fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center">
+      <div class="bg-gray-800 p-6 rounded-xl text-center animate-bounce">
+        <h3 class="text-xl text-orange-400 mb-2">✅ Pendaftaran Berhasil!</h3>
+        <p class="text-sm text-gray-300">Terima kasih, data Anda sudah terkirim.</p>
+      </div>
+    </div>
   </div>
 
-<script>
-document.getElementById('bnetfitForm').addEventListener('submit', async function(e){
-  e.preventDefault();
-  const form = e.target;
-  const fileEl = document.getElementById('FotoKTP');
-  const file = fileEl.files[0];
-
-  // formsubmit post via hidden iframe (email + attachment)
-  form.submit();
-
-  // Prepare payload for Apps Script (base64)
-  const googleScriptURL = "https://script.google.com/macros/s/AKfycbzAnKyI0xCSzhEPuFI4b9rWCwvSw8sTio8SH-wZ-ih8FckAWN1krecPmh6_Ij5fqHfs3A/exec"; // <-- GANTI
-  const maxSize = 6 * 1024 * 1024; // 6MB
-  if(file && file.size > maxSize){
-    Swal.fire({icon:'error', title:'File terlalu besar', text: 'Max 6 MB untuk file KTP.'});
-    return;
-  }
-
-  let ktp_b64 = "";
-  if(file){
-    ktp_b64 = await new Promise((res, rej) => {
-      const reader = new FileReader();
-      reader.onload = () => res(reader.result.split(',')[1]);
-      reader.onerror = () => rej('Gagal baca file');
-      reader.readAsDataURL(file);
+  <script>
+    const scriptURL = "https://script.google.com/macros/s/AKfycbxJfA3-Humpk1EqcCpkWUpBDs8rmph5OhehVdc5rS8NH1-L_iF35a6KXX4v10YyyItYMQ/exec";
+    const form = document.getElementById('bnetfitForm');
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const formData = new FormData(form);
+      fetch(scriptURL, { method: 'POST', body: formData })
+        .then(r => {
+          if (r.ok) document.getElementById('popup').classList.remove('hidden');
+          else alert("Gagal mengirim data!");
+        })
+        .catch(() => alert("Koneksi gagal!"));
     });
-  }
-
-  const fd = new FormData(form);
-  // build payload object (exclude file)
-  const payload = {};
-  fd.forEach((v,k) => {
-    if(k !== 'FotoKTP') payload[k] = v;
-  });
-  if(file){
-    payload.ktp_base64 = ktp_b64;
-    payload.ktp_name = file.name;
-    payload.ktp_type = file.type || 'image/jpeg';
-  }
-
-  try {
-    const res = await fetch(googleScriptURL, {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify(payload)
-    });
-    const j = await res.json();
-    if(j.status === 'success'){
-      Swal.fire({icon:'success', title:'Pendaftaran Berhasil', text:'Data dan KTP sudah diterima.'});
-      form.reset();
-    } else {
-      throw new Error(j.message || 'Unknown error');
-    }
-  } catch(err){
-    console.error(err);
-    Swal.fire({icon:'error', title:'Gagal mengirim', text: String(err)});
-  }
-});
-</script>
-
+  </script>
 </body>
 </html>
