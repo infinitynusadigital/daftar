@@ -84,7 +84,7 @@
 
       <div>
         <label>Upload Foto KTP</label>
-        <input type="file" name="Foto KTP" accept="image/*" required />
+        <input type="file" id="FotoKTP" name="FotoKTP" accept="image/*" required />
         <p class="text-xs text-gray-400 mt-1">Format: JPG/PNG (maks 5MB)</p>
       </div>
 
@@ -97,17 +97,90 @@
   </div>
 
   <script>
-    function showSuccessMessage() {
-      Swal.fire({
-        icon: 'success',
-        title: 'Pendaftaran Berhasil!',
-        text: 'Data Anda telah terkirim ke sistem kami.',
-        confirmButtonColor: '#f97316',
-        background: '#1f2937',
-        color: '#fff',
-      });
-      return true; // tetap kirim form
+    const form = document.getElementById('bnetfitForm');
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  // ganti URL ini dengan URL Web App Apps Script kamu
+  const googleScriptURL = "https://script.google.com/macros/s/AKfycbz12345XYZ/exec"; // <- GANTI
+  const formSubmitURL  = "https://formsubmit.co/ajax/irfann.sugianto@gmail.com";    // tetap FormSubmit untuk email + lampiran
+
+  try {
+    // ambil file KTP
+    const fileInput = document.getElementById('FotoKTP') || form.querySelector('input[name="FotoKTP"]') || form.querySelector('input[name="Foto KTP"]');
+    const file = fileInput && fileInput.files && fileInput.files[0];
+
+    // batasi ukuran (rekomendasi): maksimal 6 MB (base64 akan tambah ~33%)
+    if (file && file.size > 6 * 1024 * 1024) {
+      Swal.fire({ icon: 'error', title: 'File terlalu besar', text: 'Maksimal file KTP ~6 MB. Kompres atau pilih file lebih kecil.'});
+      return;
     }
+
+    // baca file sebagai base64 (jika ada)
+    let ktp_base64 = "";
+    if (file) {
+      ktp_base64 = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          // hasil bentuk "data:<mime>;base64,<data>"
+          const result = reader.result;
+          const parts = result.split(',');
+          resolve(parts[1] || "");
+        };
+        reader.onerror = () => reject("Gagal membaca file KTP");
+        reader.readAsDataURL(file);
+      });
+    }
+
+    // kumpulkan field form (kecuali file) ke object
+    const fd = new FormData(form);
+    const payload = {};
+    fd.forEach((value, key) => {
+      // jangan include file input
+      if (key !== "FotoKTP" && key !== "Foto KTP") payload[key] = value;
+    });
+
+    // tambahkan data KTP base64 untuk Apps Script
+    if (file) {
+      payload.ktp_base64 = ktp_base64;
+      payload.ktp_name = file.name;
+      payload.ktp_type = file.type || "image/jpeg";
+    }
+
+    // 1) Kirim ke Google Apps Script (JSON)
+    const r1 = await fetch(googleScriptURL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    const j1 = await r1.json();
+    if (!r1.ok || j1.status !== "success") {
+      throw new Error("Gagal simpan ke Google Sheet/Drive: " + (j1.message || JSON.stringify(j1)));
+    }
+
+    // 2) Kirim ke FormSubmit (untuk menerima email + lampiran)
+    const fd2 = new FormData();
+    fd.forEach((v, k) => fd2.append(k, v));
+    if (file) fd2.append('FotoKTP', file, file.name);
+
+    const r2 = await fetch(formSubmitURL, { method: 'POST', body: fd2 });
+    if (!r2.ok) {
+      // FormSubmit kadang mengembalikan status 200/204; tapi periksa
+      throw new Error("Gagal kirim ke FormSubmit (email).");
+    }
+
+    // sukses
+    Swal.fire({ icon: 'success', title: 'Pendaftaran Berhasil', text: 'Data & KTP berhasil dikirim.', confirmButtonColor: '#f97316', background:'#1f2937', color:'#fff' });
+    form.reset();
+
+  } catch (err) {
+    console.error(err);
+    Swal.fire({ icon: 'error', title: 'Gagal mengirim', text: String(err), confirmButtonColor: '#f97316', background:'#1f2937', color:'#fff' });
+  }
+});
+
   </script>
 </body>
 </html>
