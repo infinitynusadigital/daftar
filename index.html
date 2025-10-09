@@ -60,19 +60,44 @@
     </div>
   </div>
 
-  <script>
-    const scriptURL = "https://script.google.com/macros/s/AKfycbxJfA3-Humpk1EqcCpkWUpBDs8rmph5OhehVdc5rS8NH1-L_iF35a6KXX4v10YyyItYMQ/exec";
-    const form = document.getElementById('bnetfitForm');
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-      const formData = new FormData(form);
-      fetch(scriptURL, { method: 'POST', body: formData })
-        .then(r => {
-          if (r.ok) document.getElementById('popup').classList.remove('hidden');
-          else alert("Gagal mengirim data!");
-        })
-        .catch(() => alert("Koneksi gagal!"));
-    });
-  </script>
+<script>
+document.getElementById("formKTP").addEventListener("submit", async function(e) {
+  e.preventDefault();
+  const form = e.target;
+  const file = form.ktp.files[0];
+  
+  const reader = new FileReader();
+  reader.onload = async function() {
+    const base64 = reader.result.split(",")[1];
+    
+    const formData = new URLSearchParams();
+    formData.append("namaUsaha", form.namaUsaha.value);
+    formData.append("alamat", form.alamat.value);
+    formData.append("wa", form.wa.value);
+    formData.append("noAlternatif", form.noAlternatif.value);
+    formData.append("email", form.email.value);
+    formData.append("kapasitas", form.kapasitas.value);
+    formData.append("fileData", base64);
+    formData.append("fileName", file.name);
+
+    try {
+      const res = await fetch("https://script.google.com/macros/s/AKfycbxJfA3-Humpk1EqcCpkWUpBDs8rmph5OhehVdc5rS8NH1-L_iF35a6KXX4v10YyyItYMQ/exec", {
+        method: "POST",
+        body: formData
+      });
+      if (res.ok) {
+        alert("✅ Data & KTP berhasil dikirim!");
+        window.location.href = "thankyou.html";
+      } else {
+        alert("Gagal: " + res.statusText);
+      }
+    } catch (error) {
+      alert("Error: " + error.message);
+    }
+  };
+  reader.readAsDataURL(file);
+});
+</script>
+
 </body>
 </html>
