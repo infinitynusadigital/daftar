@@ -9,7 +9,8 @@ function submitForm(e) {
     const address = document.getElementById('address').value;
     const packageSelected = document.getElementById('package').value;
 
-    fetch('https://script.google.com/macros/s/AKfycbzJfWIb7MX0x4c8xmNKeAZChPq2df34A8tWc7YInsjn-WyOeqJCB1VDrQMK5BEJuOmm/exec', {
+    fetch('https://script.google.com/macros/s/AKfycbzJfWIb7MX0x4c8xmNKeAZChPq2df34A8tWc7YInsjn-WyOeqJCB1VDrQMK5BEJuOmm/exec', 
+          {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
