@@ -9,7 +9,7 @@ function submitForm(e) {
     const address = document.getElementById('address').value;
     const packageSelected = document.getElementById('package').value;
 
-    fetch('YOUR_GOOGLE_APPS_SCRIPT_URL', {
+    fetch('https://script.google.com/macros/s/AKfycbzQAyQfYTdmo7XT-CuJ0uE9AICdENQT4_lhM1hZKl0lLhehMzcl3ENmWK1dpW8SAftH/exec', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
