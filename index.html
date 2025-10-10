@@ -5,44 +5,59 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Form Pendaftaran Internet </title>
 <style>
-  body { background:#0d1117; color:#fff; font-family:sans-serif; display:flex; justify-content:center; align-items:center; height:100vh; }
-  form { background:#161b22; padding:20px; border-radius:10px; width:90%; max-width:420px; box-shadow:0 0 10px #000; }
-  input, select, textarea { width:100%; padding:10px; margin:8px 0; border-radius:6px; border:none; background:#21262d; color:#fff; }
-  button { width:100%; padding:12px; border:none; background:#f97316; color:#fff; font-size:16px; border-radius:6px; cursor:pointer; }
-  button:hover { background:#ea580c; }
+  body {background:#0b0c10;color:#eee;font-family:Arial;margin:0;padding:0;}
+  form {max-width:480px;margin:50px auto;background:#1c1f24;padding:20px;border-radius:12px;}
+  h2{text-align:center;color:#ff6600;}
+  label{display:block;margin-top:15px;}
+  input,select,textarea{width:100%;padding:8px;margin-top:5px;border-radius:6px;border:none;background:#2b2e33;color:#fff;}
+  button{margin-top:20px;width:100%;padding:12px;background:#ff6600;border:none;color:#fff;border-radius:8px;font-size:16px;}
+  button:hover{background:#ff8533;}
 </style>
 </head>
 <body>
-  <form id="bnetfitForm" method="post" enctype="multipart/form-data">
-    <h2 style="text-align:center;">Formulir Pendaftaran Internet</h2>
-    <input type="text" name="nama_usaha" placeholder="Nama usaha / pemilik" required>
-    <textarea name="alamat" placeholder="Alamat instalasi" required></textarea>
-    <input type="text" name="wa" placeholder="No. Telp / WA" required>
-    <input type="text" name="alternatif" placeholder="No. Alternatif (opsional)">
-    <input type="email" name="email" placeholder="Email" required>
-    <select name="kapasitas" required>
-      <option value="">Pilih kapasitas paket</option>
-      <option>10 Mbps</option>
-      <option>20 Mbps</option>
-      <option>50 Mbps</option>
-      <option>100 Mbps</option>
-    </select>
-    <label>Upload Foto KTP:</label>
-    <input type="file" name="ktp" accept=".jpg,.jpeg,.png,.pdf" required>
-    <button type="submit">Kirim Pendaftaran</button>
-  </form>
+<form id="regForm">
+  <h2>Form Pendaftaran Internet</h2>
+  <label>Nama Usaha:</label>
+  <input type="text" name="nama_usaha" required>
+  <label>Alamat:</label>
+  <textarea name="alamat" required></textarea>
+  <label>No Telp WA:</label>
+  <input type="text" name="wa" required>
+  <label>No Alternatif:</label>
+  <input type="text" name="alternatif">
+  <label>Email:</label>
+  <input type="email" name="email" required>
+  <label>Kapasitas Paket:</label>
+  <select name="kapasitas" required>
+    <option value="">Pilih kapasitas</option>
+    <option>10 Mbps</option>
+    <option>20 Mbps</option>
+    <option>50 Mbps</option>
+    <option>100 Mbps</option>
+  </select>
+  <label>Upload Foto KTP:</label>
+  <input type="file" name="file" id="file" accept="image/*,.pdf" required>
+  <button type="submit">Kirim Pendaftaran</button>
+</form>
 
 <script>
-  const scriptURL = 'https://script.google.com/macros/s/AKfycbyDjefjJj_dfvy-lXcDEX44yi4cccUJufhPjUKHyT7e9mZajian8Q0mmpIh7Bl22FeqyQ/exec';
-  const form = document.getElementById('bnetfitForm');
+const form = document.getElementById('regForm');
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const formData = new FormData(form);
+  const scriptURL = "https://script.google.com/macros/s/AKfycbypjHvyYCFAcLaafpKIVVeXlevLQM_wxPjecMDxwhX93NonfvYEKDXCOs07JoMHGNXc/exec";
 
-  form.addEventListener('submit', e => {
-    e.preventDefault();
-    const formData = new FormData(form);
-    fetch(scriptURL, { method: 'POST', body: formData })
-      .then(() => window.location.href = 'thankyou.html')
-      .catch(() => alert('Gagal mengirim data. Coba lagi.'));
-  });
+  try {
+    const response = await fetch(scriptURL, { method: 'POST', body: formData });
+    if (response.ok) {
+      window.location.href = "thankyou.html";
+    } else {
+      alert("Gagal mengirim data. Coba lagi.");
+    }
+  } catch (err) {
+    alert("Gagal mengirim data. Coba lagi.");
+  }
+});
 </script>
 </body>
 </html>
