@@ -9,24 +9,30 @@ function submitForm(e) {
     const address = document.getElementById('address').value;
     const packageSelected = document.getElementById('package').value;
 
-    fetch('https://script.google.com/macros/s/AKfycbyyRrxgmD-bV2lC1FgIACQXlG1DyeOSwZc7yiy0PN9XEXlEJbW2x-fKLEklrQiO2i7B/exec', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-        name: name,
-        email: email,
-        whatsapp: whatsapp,
-        address: address,
-        package: packageSelected
-    }),
-})
-.then(response => response.json())
-.then(data => {
-    alert('Form submitted successfully!');
-})
-.catch(error => {
-    console.error('Error:', error); // Ini akan tampil di console browser
-    alert('Error submitting form. Check console for details.');
-});
+    fetch('https://script.google.com/macros/s/AKfycbzQAyQfYTdmo7XT-CuJ0uE9AICdENQT4_lhM1hZKl0lLhehMzcl3ENmWK1dpW8SAftH/exec', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            name: name,
+            email: email,
+            whatsapp: whatsapp,
+            address: address,
+            package: packageSelected
+        }),
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        alert('Form submitted successfully!');
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error submitting form. Check console for details.');
+    });
+}
