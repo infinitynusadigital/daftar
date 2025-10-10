@@ -58,22 +58,20 @@ const previewImage = document.getElementById('previewKTP');
 // Tampilkan preview gambar jika file dipilih
 fileInput.addEventListener('change', () => {
   const file = fileInput.files[0];
-  if (file) {
-    if (file.type.startsWith('image/')) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        previewImage.src = reader.result;
-        previewImage.style.display = 'block';
-      };
-      reader.readAsDataURL(file);
-    } else {
-      previewImage.style.display = 'none';
-    }
+  if (file && file.type.startsWith('image/')) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      previewImage.src = reader.result;
+      previewImage.style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+  } else {
+    previewImage.style.display = 'none';
   }
 });
 
 // Ganti URL di bawah ini dengan URL Web App Google Apps Script yang sudah Anda deploy
-const url = "https://script.google.com/macros/s/AKfycbwW8rUypJXo7th3YucBcngaTeUd93oouDD-Owc-6RFI2YEb3xpTfK3WSpAJLZYKp7ch/exec";
+const url = "https://script.google.com/macros/s/AKfycbxPsU1aBNpfm-Uabo6eKcDO5XDj0gVYyWIZ3tKhNef0cW4tdchUIa9sRFL_H_Z0YTBw/exec"; // GANTI dengan URL Web App
 
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -97,23 +95,4 @@ form.addEventListener('submit', async (e) => {
     const binaryString = String.fromCharCode(...new Uint8Array(arrayBuffer));
     const base64String = btoa(binaryString);
 
-    // Data JSON yang akan dikirim
-    const data = {
-      ...Object.fromEntries(new FormData(form)),
-      fileUpload: base64String,
-      fileUpload_name: file.name,
-      fileUpload_type: file.type
-    };
-
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    });
-    const result = await response.text();
-    if (result.includes("BERHASIL")) {
-      alert('Pengiriman berhasil!');
-      form.reset();
-      document.getElementById('previewKTP');
-    });
-      
+    // Data JSON
