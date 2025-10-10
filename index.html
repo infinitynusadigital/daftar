@@ -55,6 +55,7 @@ const form = document.getElementById('regForm');
 const fileInput = document.getElementById('fileUpload');
 const previewImage = document.getElementById('previewKTP');
 
+// Tampilkan preview gambar jika file dipilih
 fileInput.addEventListener('change', () => {
   const file = fileInput.files[0];
   if (file) {
@@ -71,17 +72,19 @@ fileInput.addEventListener('change', () => {
   }
 });
 
+// Ganti URL di bawah ini dengan URL Web App Google Apps Script yang sudah Anda deploy
+const url = "https://script.google.com/macros/s/AKfycbwW8rUypJXo7th3YucBcngaTeUd93oouDD-Owc-6RFI2YEb3xpTfK3WSpAJLZYKp7ch/exec";
+
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
 
-  // Validasi nomor telepon (hanya angka)
+  // Validasi nomor WA (hanya angka)
   const wa = form.wa.value.trim();
   if (!/^\d+$/.test(wa)) {
     alert('Nomor WhatsApp harus berupa angka.');
     return;
   }
 
-  // Validasi file
   const file = fileInput.files[0];
   if (!file) {
     alert('Silakan pilih file KTP.');
@@ -94,7 +97,7 @@ form.addEventListener('submit', async (e) => {
     const binaryString = String.fromCharCode(...new Uint8Array(arrayBuffer));
     const base64String = btoa(binaryString);
 
-    // Buat data JSON
+    // Data JSON yang akan dikirim
     const data = {
       ...Object.fromEntries(new FormData(form)),
       fileUpload: base64String,
@@ -102,12 +105,15 @@ form.addEventListener('submit', async (e) => {
       fileUpload_type: file.type
     };
 
-    const url = "https://script.google.com/macros/s/AKfycbwW8rUypJXo7th3YucBcngaTeUd93oouDD-Owc-6RFI2YEb3xpTfK3WSpAJLZYKp7ch/exec"; // Ganti dengan URL Web App di Google Apps Script
     const response = await fetch(url, {
       method: 'POST',
-      body: JSON.stringify(data),
-      headers: {'Content-Type': 'application/json'}
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
     });
     const result = await response.text();
     if (result.includes("BERHASIL")) {
-      alert('Pengiriman berhasil! Ter
+      alert('Pengiriman berhasil!');
+      form.reset();
+      document.getElementById('previewKTP');
+    });
+      
