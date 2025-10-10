@@ -3,8 +3,9 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Form Pendaftaran Internet</title>
+<title>Form Pendaftaran</title>
 <style>
+  /* style sama seperti sebelumnya */
   body {background:#0b0c10;color:#eee;font-family:Arial;margin:0;padding:0;}
   form {max-width:480px;margin:50px auto;background:#1c1f24;padding:20px;border-radius:12px;}
   h2{text-align:center;color:#ff6600;}
@@ -50,46 +51,3 @@
 <script>
 const form = document.getElementById('regForm');
 
-form.addEventListener('submit', async (e) => {
-  e.preventDefault();
-
-  const formData = new FormData(form);
-  const url = "https://script.google.com/macros/s/AKfycbzo-RGUH4lArpAe1iv_FFcuvxfffmDeBI2i0giqtkqS6T6locAADVW7rLNwIoJKk8Kp/exec"; // Ganti dengan URL Apps Script
-
-  const fileInput = document.getElementById('fileUpload');
-  if (fileInput.files.length > 0) {
-    const file = fileInput.files[0];
-
-    // Baca file sebagai ArrayBuffer dan konversi ke Base64
-    const arrayBuffer = await file.arrayBuffer();
-    const binaryString = String.fromCharCode(...new Uint8Array(arrayBuffer));
-    const base64String = btoa(binaryString);
-
-    // Tambahkan data file ke formData
-    formData.delete('fileUpload'); // Hapus input file asli agar tidak dikirim
-    formData.append('fileUpload', base64String);
-    formData.append('fileUpload_name', file.name);
-    formData.append('fileUpload_type', file.type);
-  } else {
-    alert('Silakan pilih file KTP.');
-    return;
-  }
-
-  try {
-    const response = await fetch(url, {
-      method: 'POST',
-      body: formData
-    });
-    const result = await response.text();
-    if (result.includes("BERHASIL")) {
-      window.location.href = "thankyou.html"; // Halaman sukses
-    } else {
-      alert("Gagal: " + result);
-    }
-  } catch (err) {
-    alert("Gagal kirim: " + err);
-  }
-});
-</script>
-</body>
-</html>
