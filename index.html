@@ -1,81 +1,51 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Formulir Pendaftaran Internet</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
   <style>
-    body {
-      background: linear-gradient(135deg, #1a1a2e, #111);
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Poppins', sans-serif;
-    }
-    .form-card {
-      animation: fadeIn 1s ease forwards;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .icon-anim {
-      animation: slideIn 0.6s ease forwards;
-    }
-    @keyframes slideIn {
-      from { opacity: 0; transform: translateX(-20px); }
-      to { opacity: 1; transform: translateX(0); }
-    }
-    .pulse {
-      animation: pulse 2s infinite;
-    }
-    @keyframes pulse {
-      0% { box-shadow: 0 0 0 0 rgba(255, 94, 0, 0.6); }
-      70% { box-shadow: 0 0 0 10px rgba(255, 94, 0, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(255, 94, 0, 0); }
-    }
+    body { background: linear-gradient(135deg,#1a1a2e,#111); min-height:100vh; display:flex; align-items:center; justify-content:center; font-family:Poppins, sans-serif; padding:24px; }
+    .form-card { animation: fadeIn 0.9s ease forwards; width:100%; max-width:760px; }
+    @keyframes fadeIn { from{opacity:0; transform:translateY(20px)} to{opacity:1; transform:translateY(0)} }
+    .icon-anim { animation: slideIn 0.6s ease forwards; }
+    @keyframes slideIn { from{opacity:0; transform:translateX(-10px)} to{opacity:1; transform:translateX(0)} }
+    .pulse { animation: pulse 2s infinite; }
+    @keyframes pulse { 0%{ box-shadow:0 0 0 0 rgba(255,94,0,0.5) } 70%{ box-shadow:0 0 0 10px rgba(255,94,0,0) } 100%{ box-shadow:0 0 0 0 rgba(255,94,0,0) } }
   </style>
 </head>
 <body>
-  <div class="form-card bg-gray-100 p-8 rounded-2xl shadow-2xl w-full max-w-lg">
-    <h2 class="text-2xl font-semibold text-center mb-6 text-gray-800">📡 Formulir Pendaftaran Internet</h2>
+  <div class="form-card bg-gray-100 p-8 rounded-2xl shadow-2xl">
+    <h2 class="text-2xl font-semibold text-center mb-4 text-gray-800">📡 Formulir Pendaftaran Internet</h2>
 
-    <form id="daftarForm" class="space-y-4">
-
-      <!-- Nama -->
+    <form id="daftarForm" class="space-y-4" enctype="multipart/form-data">
       <div class="flex items-center bg-white rounded-lg shadow p-3 icon-anim">
         <i class="ph ph-user text-gray-500 text-xl mr-3"></i>
-        <input type="text" name="nama" placeholder="Nama lengkap" required class="w-full outline-none">
+        <input id="nama" type="text" name="nama" placeholder="Nama lengkap" required class="w-full outline-none">
       </div>
 
-      <!-- Alamat -->
       <div class="flex items-center bg-white rounded-lg shadow p-3 icon-anim">
         <i class="ph ph-house-line text-gray-500 text-xl mr-3"></i>
-        <input type="text" name="alamat" placeholder="Alamat lengkap" required class="w-full outline-none">
+        <input id="alamat" type="text" name="alamat" placeholder="Alamat lengkap" required class="w-full outline-none">
       </div>
 
-      <!-- No Telp -->
       <div class="flex items-center bg-white rounded-lg shadow p-3 icon-anim">
         <i class="ph ph-phone text-gray-500 text-xl mr-3"></i>
-        <input type="text" name="telepon" placeholder="Nomor Telepon / WhatsApp" required class="w-full outline-none">
+        <input id="telepon" type="text" name="telepon" placeholder="Nomor Telepon / WhatsApp" required class="w-full outline-none">
       </div>
 
-      <!-- No Abonemen -->
       <div class="flex items-center bg-white rounded-lg shadow p-3 icon-anim">
         <i class="ph ph-identification-card text-gray-500 text-xl mr-3"></i>
-        <input type="text" name="abonemen" placeholder="Nomor Abonemen (jika ada)" class="w-full outline-none">
+        <input id="abonemen" type="text" name="abonemen" placeholder="Nomor Abonemen (jika ada)" class="w-full outline-none">
       </div>
 
-      <!-- Email -->
       <div class="flex items-center bg-white rounded-lg shadow p-3 icon-anim">
         <i class="ph ph-envelope text-gray-500 text-xl mr-3"></i>
-        <input type="email" name="email" placeholder="Alamat Email" required class="w-full outline-none">
+        <input id="email" type="email" name="email" placeholder="Alamat Email" required class="w-full outline-none">
       </div>
 
-      <!-- Kecepatan Paket -->
       <div class="bg-white rounded-lg shadow p-4 icon-anim">
         <label class="block font-medium text-gray-700 mb-2">Pilih Kecepatan Paket</label>
         <div class="space-y-2 text-gray-700">
@@ -86,38 +56,107 @@
         </div>
       </div>
 
-      <!-- Lokasi -->
       <div class="flex items-center bg-white rounded-lg shadow p-3 icon-anim">
         <i class="ph ph-map-pin text-gray-500 text-xl mr-3"></i>
-        <input type="url" name="lokasi" placeholder="Share link lokasi Google Maps" required class="w-full outline-none">
+        <input id="lokasi" type="url" name="lokasi" placeholder="Share link lokasi Google Maps" required class="w-full outline-none">
       </div>
 
-      <!-- Upload KTP -->
       <div class="bg-white rounded-lg shadow p-4 icon-anim">
         <label class="block font-medium text-gray-700 mb-2">Upload Foto KTP (max 10MB)</label>
-        <input type="file" accept="image/*" class="block w-full text-sm text-gray-500">
+        <input id="file" type="file" accept="image/*,application/pdf" class="block w-full text-sm text-gray-500">
+        <p id="fileNote" class="text-xs text-gray-500 mt-2">Format: JPG/PNG/PDF. Maks 10MB.</p>
       </div>
 
-      <!-- Tombol -->
-      <button type="submit"
-        class="w-full bg-gradient-to-r from-orange-500 to-red-500 text-white py-3 rounded-xl font-semibold shadow-lg hover:opacity-90 transition-all pulse">
+      <button id="submitBtn" type="submit" class="w-full bg-gradient-to-r from-orange-500 to-red-500 text-white py-3 rounded-xl font-semibold shadow-lg hover:opacity-90 transition-all pulse">
         Kirim Pendaftaran
       </button>
-
     </form>
 
     <p id="notif" class="text-center mt-4 text-green-600 font-medium hidden">✅ Formulir berhasil dikirim!</p>
+    <p id="err" class="text-center mt-4 text-red-600 font-medium hidden"></p>
   </div>
 
-  <script>
-    const form = document.getElementById('daftarForm');
-    const notif = document.getElementById('notif');
-    form.addEventListener('submit', e => {
-      e.preventDefault();
+<script>
+  // GANTI dengan Web App URL dari Apps Script (setelah Deploy)
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzoRGjjAzKYlKqBHU9sSZhy-l7BNKl8-NnCAiXveFsoBjtYckn91vJTLlr1f0E2He3Q/exec';
+
+  const form = document.getElementById('daftarForm');
+  const notif = document.getElementById('notif');
+  const errEl = document.getElementById('err');
+  const submitBtn = document.getElementById('submitBtn');
+
+  form.addEventListener('submit', async (ev) => {
+    ev.preventDefault();
+    notif.classList.add('hidden');
+    errEl.classList.add('hidden');
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Mengirim...';
+
+    try {
+      const nama = document.getElementById('nama').value.trim();
+      const alamat = document.getElementById('alamat').value.trim();
+      const telepon = document.getElementById('telepon').value.trim();
+      const abonemen = document.getElementById('abonemen').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const lokasi = document.getElementById('lokasi').value.trim();
+      const paket = document.querySelector('input[name="paket"]:checked') ? document.querySelector('input[name="paket"]:checked').value : '';
+
+      // File handling -> read as base64 (without data:prefix)
+      const fileInput = document.getElementById('file');
+      let fileBase64 = '';
+      let fileName = '';
+      if (fileInput.files && fileInput.files.length > 0) {
+        const file = fileInput.files[0];
+        fileName = file.name;
+        if (file.size > 10 * 1024 * 1024) {
+          throw new Error('Ukuran file melebihi 10MB');
+        }
+        fileBase64 = await readFileAsBase64(file); // returns base64 string with prefix
+        // hapus prefix "data:<mime>;base64," agar lebih ringkas
+        const commaIdx = fileBase64.indexOf(',');
+        if (commaIdx !== -1) fileBase64 = fileBase64.substring(commaIdx+1);
+      }
+
+      const payload = {
+        nama, alamat, telepon, abonemen, email, paket, lokasi,
+        fileName, fileBase64
+      };
+
+      const res = await fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      const json = await res.json();
+
+      if (!json.ok) {
+        throw new Error(json.error || 'Gagal mengirim data');
+      }
+
       notif.classList.remove('hidden');
       form.reset();
+    } catch (err) {
+      console.error(err);
+      errEl.textContent = 'Error: ' + (err.message || err);
+      errEl.classList.remove('hidden');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Kirim Pendaftaran';
       window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  });
+
+  function readFileAsBase64(file) {
+    return new Promise((resolve, reject) => {
+      const fr = new FileReader();
+      fr.onload = () => resolve(fr.result);
+      fr.onerror = (e) => reject(e);
+      fr.readAsDataURL(file);
     });
-  </script>
+  }
+</script>
 </body>
 </html>
