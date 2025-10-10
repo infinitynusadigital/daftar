@@ -45,7 +45,7 @@ const form = document.getElementById('regForm');
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
   const formData = new FormData(form);
-  const scriptURL = "https://script.google.com/macros/s/AKfycbypjHvyYCFAcLaafpKIVVeXlevLQM_wxPjecMDxwhX93NonfvYEKDXCOs07JoMHGNXc/exec";
+  const scriptURL = "https://script.google.com/macros/s/AKfycbwwvyLsQYmwGeo2HXLHfCZZm9BxSOk4qXGCl4cg7MX0BE5DVaIgP7oxBY0xq0vIWWsz/exec";
 
   try {
     const response = await fetch(scriptURL, { method: 'POST', body: formData });
