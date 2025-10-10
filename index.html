@@ -1,7 +1,49 @@
-<form id="regForm" enctype="multipart/form-data">
-  <!-- isi form seperti sebelumnya -->
-  ... (kode form tetap sama) ...
-  <input type="file" id="fileUpload" name="fileUpload" accept="image/*,.pdf" required>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Form Pendaftaran Internet</title>
+<style>
+  body {background:#0b0c10;color:#eee;font-family:Arial;margin:0;padding:0;}
+  form {max-width:480px;margin:50px auto;background:#1c1f24;padding:20px;border-radius:12px;}
+  h2{text-align:center;color:#ff6600;}
+  label{display:block;margin-top:15px;}
+  input,select,textarea{width:100%;padding:8px;margin-top:5px;border-radius:6px;border:none;background:#2b2e33;color:#fff;}
+  button{margin-top:20px;width:100%;padding:12px;background:#ff6600;border:none;color:#fff;border-radius:8px;font-size:16px;}
+  button:hover{background:#ff8533;}
+</style>
+</head>
+<body>
+<form id="regForm">
+  <h2>Form Pendaftaran Internet</h2>
+  <label>Nama Usaha:</label>
+  <input type="text" name="nama_usaha" required />
+
+  <label>Alamat:</label>
+  <textarea name="alamat" required></textarea>
+
+  <label>No Telp WA:</label>
+  <input type="text" name="wa" required />
+
+  <label>No Alternatif:</label>
+  <input type="text" name="alternatif" />
+
+  <label>Email:</label>
+  <input type="email" name="email" required />
+
+  <label>Kapasitas Paket:</label>
+  <select name="kapasitas" required>
+    <option value="">Pilih kapasitas</option>
+    <option>10 Mbps</option>
+    <option>20 Mbps</option>
+    <option>50 Mbps</option>
+    <option>100 Mbps</option>
+  </select>
+
+  <label>Upload Foto KTP:</label>
+  <input type="file" id="fileUpload" name="fileUpload" accept="image/*,.pdf" required />
+
   <button type="submit">Kirim Pendaftaran</button>
 </form>
 
@@ -12,18 +54,19 @@ form.addEventListener('submit', async (e) => {
   e.preventDefault();
 
   const formData = new FormData(form);
-  const url = "https://script.google.com/macros/s/AKfycbzWxZXTFHzakM6C40QBB68Mu9j477awuccl9PFvWDLYQ5bHaV-IPye9oF2M1kiS0ubE/exec"; // Ganti dengan URL Web App
+  const url = "https://script.google.com/macros/s/AKfycby8Gx7fSgPLKkRzICK_Jz_k8HY2Mx9uM9pG8ggL8L38ApEZd3B6XcqL73Pf6Cp-5R6U/exec"; // Ganti dengan URL Apps Script
 
-  // Baca file dan convert ke base64
   const fileInput = document.getElementById('fileUpload');
   if (fileInput.files.length > 0) {
     const file = fileInput.files[0];
 
-    // Baca file sebagai ArrayBuffer
+    // Baca file sebagai ArrayBuffer dan konversi ke Base64
     const arrayBuffer = await file.arrayBuffer();
-    const base64String = btoa(String.fromCharCode(...new Uint8Array(arrayBuffer)));
+    const binaryString = String.fromCharCode(...new Uint8Array(arrayBuffer));
+    const base64String = btoa(binaryString);
 
-    // Append file data ke formData
+    // Tambahkan data file ke formData
+    formData.delete('fileUpload'); // Hapus input file asli agar tidak dikirim
     formData.append('fileUpload', base64String);
     formData.append('fileUpload_name', file.name);
     formData.append('fileUpload_type', file.type);
@@ -39,12 +82,14 @@ form.addEventListener('submit', async (e) => {
     });
     const result = await response.text();
     if (result.includes("BERHASIL")) {
-      window.location.href = "thankyou.html"; // halaman konfirmasi
+      window.location.href = "thankyou.html"; // Halaman sukses
     } else {
-      alert(result);
+      alert("Gagal: " + result);
     }
   } catch (err) {
     alert("Gagal kirim: " + err);
   }
 });
 </script>
+</body>
+</html>
