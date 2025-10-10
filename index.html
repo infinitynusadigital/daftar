@@ -1,98 +1,35 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Form Pendaftaran</title>
-<style>
-  body {background:#0b0c10;color:#eee;font-family:Arial;margin:0;padding:0;}
-  form {max-width:480px;margin:50px auto;background:#1c1f24;padding:20px;border-radius:12px;}
-  h2{text-align:center;color:#ff6600;}
-  label{display:block;margin-top:15px;}
-  input,select,textarea{width:100%;padding:8px;margin-top:5px;border-radius:6px;border:none;background:#2b2e33;color:#fff;}
-  button{margin-top:20px;width:100%;padding:12px;background:#ff6600;border:none;border-radius:8px;font-size:16px;}
-  button:hover{background:#ff8533;}
-  #previewKTP {margin-top:10px; max-width:100%; height:auto; border:1px solid #555; display:none;}
-</style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Internet Registration Form</title>
 </head>
 <body>
-<form id="regForm">
-  <h2>Form Pendaftaran Internet</h2>
-  <label>Nama Usaha:</label>
-  <input type="text" name="nama_usaha" required />
+    <h2>Form Registrasi Internet</h2>
+    <form id="registrationForm">
+        <label for="name">Nama Lengkap</label><br>
+        <input type="text" id="name" name="name" required><br><br>
 
-  <label>Alamat:</label>
-  <textarea name="alamat" required></textarea>
+        <label for="email">Email</label><br>
+        <input type="email" id="email" name="email" required><br><br>
 
-  <label>No Telp WA:</label>
-  <input type="text" name="wa" pattern="\d+" title="Hanya angka" required />
+        <label for="whatsapp">Nomor WhatsApp</label><br>
+        <input type="tel" id="whatsapp" name="whatsapp" required><br><br>
 
-  <label>No Alternatif:</label>
-  <input type="text" name="alternatif" />
+        <label for="address">Alamat</label><br>
+        <textarea id="address" name="address" rows="4" required></textarea><br><br>
 
-  <label>Email:</label>
-  <input type="email" name="email" required />
+        <label for="package">Pilih Paket</label><br>
+        <select id="package" name="package" required>
+            <option value="A">Paket A - 10 Mbps</option>
+            <option value="B">Paket B - 20 Mbps</option>
+            <option value="C">Paket C - 50 Mbps</option>
+        </select><br><br>
 
-  <label>Kapasitas Paket:</label>
-  <select name="kapasitas" required>
-    <option value="">Pilih kapasitas</option>
-    <option>10 Mbps</option>
-    <option>20 Mbps</option>
-    <option>50 Mbps</option>
-    <option>100 Mbps</option>
-  </select>
+        <button type="submit">Submit</button>
+    </form>
 
-  <label>Upload Foto KTP:</label>
-  <input type="file" id="fileUpload" name="fileUpload" accept="image/*,.pdf" required />
-
-  <img id="previewKTP" alt="Preview KTP" />
-
-  <button type="submit">Kirim Pendaftaran</button>
-</form>
-
-<script>
-const form = document.getElementById('regForm');
-const fileInput = document.getElementById('fileUpload');
-const previewImage = document.getElementById('previewKTP');
-
-// Tampilkan preview gambar jika file dipilih
-fileInput.addEventListener('change', () => {
-  const file = fileInput.files[0];
-  if (file && file.type.startsWith('image/')) {
-    const reader = new FileReader();
-    reader.onload = () => {
-      previewImage.src = reader.result;
-      previewImage.style.display = 'block';
-    };
-    reader.readAsDataURL(file);
-  } else {
-    previewImage.style.display = 'none';
-  }
-});
-
-// Ganti URL di bawah ini dengan URL Web App Google Apps Script yang sudah Anda deploy
-const url = "https://script.google.com/macros/s/AKfycbxPsU1aBNpfm-Uabo6eKcDO5XDj0gVYyWIZ3tKhNef0cW4tdchUIa9sRFL_H_Z0YTBw/exec"; // GANTI dengan URL Web App
-
-form.addEventListener('submit', async (e) => {
-  e.preventDefault();
-
-  // Validasi nomor WA (hanya angka)
-  const wa = form.wa.value.trim();
-  if (!/^\d+$/.test(wa)) {
-    alert('Nomor WhatsApp harus berupa angka.');
-    return;
-  }
-
-  const file = fileInput.files[0];
-  if (!file) {
-    alert('Silakan pilih file KTP.');
-    return;
-  }
-
-  try {
-    // Baca file sebagai Base64
-    const arrayBuffer = await file.arrayBuffer();
-    const binaryString = String.fromCharCode(...new Uint8Array(arrayBuffer));
-    const base64String = btoa(binaryString);
-
-    // Data JSON
+    <script src="script.js"></script>
+</body>
+</html>
