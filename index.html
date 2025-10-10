@@ -45,7 +45,7 @@ const form = document.getElementById('regForm');
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
   const formData = new FormData(form);
-  const scriptURL = "PASTE_WEB_APP_URL_DI_SINI";
+  const scriptURL = "https://script.google.com/macros/s/AKfycbyu5ZX2EoVCU8ZYVCnhhhwLkJpvgiOB5L7hd_fK8A93VlkBjetBcmjPg7qElvI6Bgw3/exec";
 
   try {
     const response = await fetch(scriptURL, { method: 'POST', body: formData });
