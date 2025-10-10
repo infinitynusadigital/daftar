@@ -5,14 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Form Pendaftaran</title>
 <style>
-  /* style sama seperti sebelumnya */
   body {background:#0b0c10;color:#eee;font-family:Arial;margin:0;padding:0;}
   form {max-width:480px;margin:50px auto;background:#1c1f24;padding:20px;border-radius:12px;}
   h2{text-align:center;color:#ff6600;}
   label{display:block;margin-top:15px;}
   input,select,textarea{width:100%;padding:8px;margin-top:5px;border-radius:6px;border:none;background:#2b2e33;color:#fff;}
-  button{margin-top:20px;width:100%;padding:12px;background:#ff6600;border:none;color:#fff;border-radius:8px;font-size:16px;}
+  button{margin-top:20px;width:100%;padding:12px;background:#ff6600;border:none;border-radius:8px;font-size:16px;}
   button:hover{background:#ff8533;}
+  #previewKTP {margin-top:10px; max-width:100%; height:auto; border:1px solid #555; display:none;}
 </style>
 </head>
 <body>
@@ -25,7 +25,7 @@
   <textarea name="alamat" required></textarea>
 
   <label>No Telp WA:</label>
-  <input type="text" name="wa" required />
+  <input type="text" name="wa" pattern="\d+" title="Hanya angka" required />
 
   <label>No Alternatif:</label>
   <input type="text" name="alternatif" />
@@ -45,53 +45,61 @@
   <label>Upload Foto KTP:</label>
   <input type="file" id="fileUpload" name="fileUpload" accept="image/*,.pdf" required />
 
+  <img id="previewKTP" alt="Preview KTP" />
+
   <button type="submit">Kirim Pendaftaran</button>
 </form>
 
 <script>
 const form = document.getElementById('regForm');
+const fileInput = document.getElementById('fileUpload');
+const previewImage = document.getElementById('previewKTP');
+
+fileInput.addEventListener('change', () => {
+  const file = fileInput.files[0];
+  if (file) {
+    if (file.type.startsWith('image/')) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        previewImage.src = reader.result;
+        previewImage.style.display = 'block';
+      };
+      reader.readAsDataURL(file);
+    } else {
+      previewImage.style.display = 'none';
+    }
+  }
+});
 
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
 
-  const formData = new FormData(form);
-  const url = "https://script.google.com/macros/s/AKfycbzo-RGUH4lArpAe1iv_FFcuvxfffmDeBI2i0giqtkqS6T6locAADVW7rLNwIoJKk8Kp/exec"; // Ganti dengan URL Apps Script
+  // Validasi nomor telepon (hanya angka)
+  const wa = form.wa.value.trim();
+  if (!/^\d+$/.test(wa)) {
+    alert('Nomor WhatsApp harus berupa angka.');
+    return;
+  }
 
-  const fileInput = document.getElementById('fileUpload');
-  if (fileInput.files.length > 0) {
-    const file = fileInput.files[0];
-
-    // Baca file sebagai ArrayBuffer dan konversi ke Base64
-    const arrayBuffer = await file.arrayBuffer();
-    const binaryString = String.fromCharCode(...new Uint8Array(arrayBuffer));
-    const base64String = btoa(binaryString);
-
-    // Tambahkan data file ke formData
-    formData.delete('fileUpload'); // Hapus input file asli agar tidak dikirim
-    formData.append('fileUpload', base64String);
-    formData.append('fileUpload_name', file.name);
-    formData.append('fileUpload_type', file.type);
-  } else {
+  // Validasi file
+  const file = fileInput.files[0];
+  if (!file) {
     alert('Silakan pilih file KTP.');
     return;
   }
 
   try {
-    const response = await fetch(url, {
-      method: 'POST',
-      body: formData
-    });
-    const result = await response.text();
-    if (result.includes("BERHASIL")) {
-      window.location.href = "thankyou.html"; // Halaman sukses
-    } else {
-      alert("Gagal: " + result);
-    }
-  } catch (err) {
-    alert("Gagal kirim: " + err);
-  }
-});
-</script>
-</body>
-</html>
+    // Baca file sebagai Base64
+    const arrayBuffer = await file.arrayBuffer();
+    const binaryString = String.fromCharCode(...new Uint8Array(arrayBuffer));
+    const base64String = btoa(binaryString);
 
+    // Buat data JSON
+    const data = {
+      ...Object.fromEntries(new FormData(form)),
+      fileUpload: base64String,
+      fileUpload_name: file.name,
+      fileUpload_type: file.type
+    };
+
+    //
