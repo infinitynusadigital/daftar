@@ -51,7 +51,6 @@
 </form>
 
 <script>
-const url = "<https://script.google.com/macros/s/AKfycbyhehz9fa77hhtDr-icxieMvY7XFwPjs4fWuMM5oD0dxidj5H7y52PoDCLam0ogbO_1/exec>";
 const form = document.getElementById('regForm');
 const fileInput = document.getElementById('fileUpload');
 const previewImage = document.getElementById('previewKTP');
@@ -103,4 +102,13 @@ form.addEventListener('submit', async (e) => {
       fileUpload_type: file.type
     };
 
-    //
+    const url = "
+https://script.google.com/macros/s/AKfycbyzt77Rp3D87_frgpQ1qO4pE4C7WynW4R_a-_MqwVmgxtfLdBBIPYhUlrQprAM6ztWc/exec"; // Ganti dengan URL Web App di Google Apps Script
+    const response = await fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {'Content-Type': 'application/json'}
+    });
+    const result = await response.text();
+    if (result.includes("BERHASIL")) {
+      alert('Pengiriman berhasil! Ter
