@@ -15,7 +15,7 @@
 </style>
 </head>
 <body>
-<form id="regForm">
+<form id="regForm" enctype="multipart/form-data">
   <h2>Form Pendaftaran Internet</h2>
   <label>Nama Usaha:</label>
   <input type="text" name="nama_usaha" required>
@@ -45,17 +45,18 @@ const form = document.getElementById('regForm');
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
   const formData = new FormData(form);
-  const scriptURL = "https://script.google.com/macros/s/AKfycby560wW_zm0uRllT6PZ8n4MC6aMq0APa19xBcZbSkpD9uTAtnPejHznlhv9DedzZsHN/exec"; // ganti nanti setelah deploy
+  const scriptURL = "PASTE_WEB_APP_URL_DI_SINI";
 
   try {
     const response = await fetch(scriptURL, { method: 'POST', body: formData });
-    if (response.ok) {
+    const result = await response.text();
+    if (result.includes("BERHASIL")) {
       window.location.href = "thankyou.html";
     } else {
-      alert("Gagal mengirim data. Coba lagi.");
+      alert("Gagal upload: " + result);
     }
   } catch (err) {
-    alert("Gagal mengirim data. Coba lagi.");
+    alert("Koneksi gagal: " + err);
   }
 });
 </script>
