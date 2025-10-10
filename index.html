@@ -1,65 +1,123 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Form Pendaftaran Internet</title>
-<style>
-  body {background:#0b0c10;color:#eee;font-family:Arial;margin:0;padding:0;}
-  form {max-width:480px;margin:50px auto;background:#1c1f24;padding:20px;border-radius:12px;}
-  h2{text-align:center;color:#ff6600;}
-  label{display:block;margin-top:15px;}
-  input,select,textarea{width:100%;padding:8px;margin-top:5px;border-radius:6px;border:none;background:#2b2e33;color:#fff;}
-  button{margin-top:20px;width:100%;padding:12px;background:#ff6600;border:none;color:#fff;border-radius:8px;font-size:16px;}
-  button:hover{background:#ff8533;}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Formulir Pendaftaran Internet</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <style>
+    body {
+      background: linear-gradient(135deg, #1a1a2e, #111);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Poppins', sans-serif;
+    }
+    .form-card {
+      animation: fadeIn 1s ease forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .icon-anim {
+      animation: slideIn 0.6s ease forwards;
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(-20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    .pulse {
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(255, 94, 0, 0.6); }
+      70% { box-shadow: 0 0 0 10px rgba(255, 94, 0, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(255, 94, 0, 0); }
+    }
+  </style>
 </head>
 <body>
-<form id="regForm" enctype="multipart/form-data">
-  <h2>Form Pendaftaran Internet</h2>
-  <label>Nama Usaha:</label>
-  <input type="text" name="nama_usaha" required>
-  <label>Alamat:</label>
-  <textarea name="alamat" required></textarea>
-  <label>No Telp WA:</label>
-  <input type="text" name="wa" required>
-  <label>No Alternatif:</label>
-  <input type="text" name="alternatif">
-  <label>Email:</label>
-  <input type="email" name="email" required>
-  <label>Kapasitas Paket:</label>
-  <select name="kapasitas" required>
-    <option value="">Pilih kapasitas</option>
-    <option>10 Mbps</option>
-    <option>20 Mbps</option>
-    <option>50 Mbps</option>
-    <option>100 Mbps</option>
-  </select>
-  <label>Upload Foto KTP:</label>
-  <input type="file" name="fileUpload" id="fileUpload" accept="image/*,.pdf" required>
-  <button type="submit">Kirim Pendaftaran</button>
-</form>
+  <div class="form-card bg-gray-100 p-8 rounded-2xl shadow-2xl w-full max-w-lg">
+    <h2 class="text-2xl font-semibold text-center mb-6 text-gray-800">📡 Formulir Pendaftaran Internet</h2>
 
-<script>
-const form = document.getElementById('regForm');
-form.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const formData = new FormData(form);
-  const scriptURL = "const scriptURL = "https://script.google.com/macros/s/AKfycbxJfA3-Humpk1EqcCpkWUpBDs8rmph5OhehVdc5rS8NH1-L_iF35a6KXX4v10YyyItYMQ/exec";
-";
+    <form id="daftarForm" class="space-y-4">
 
-  try {
-    const response = await fetch(scriptURL, { method: 'POST', body: formData });
-    const result = await response.text();
-    if (result.includes("BERHASIL")) {
-      window.location.href = "thankyou.html";
-    } else {
-      alert(result);
-    }
-  } catch (err) {
-    alert("Gagal kirim: " + err);
-  }
-});
-</script>
+      <!-- Nama -->
+      <div class="flex items-center bg-white rounded-lg shadow p-3 icon-anim">
+        <i class="ph ph-user text-gray-500 text-xl mr-3"></i>
+        <input type="text" name="nama" placeholder="Nama lengkap" required class="w-full outline-none">
+      </div>
+
+      <!-- Alamat -->
+      <div class="flex items-center bg-white rounded-lg shadow p-3 icon-anim">
+        <i class="ph ph-house-line text-gray-500 text-xl mr-3"></i>
+        <input type="text" name="alamat" placeholder="Alamat lengkap" required class="w-full outline-none">
+      </div>
+
+      <!-- No Telp -->
+      <div class="flex items-center bg-white rounded-lg shadow p-3 icon-anim">
+        <i class="ph ph-phone text-gray-500 text-xl mr-3"></i>
+        <input type="text" name="telepon" placeholder="Nomor Telepon / WhatsApp" required class="w-full outline-none">
+      </div>
+
+      <!-- No Abonemen -->
+      <div class="flex items-center bg-white rounded-lg shadow p-3 icon-anim">
+        <i class="ph ph-identification-card text-gray-500 text-xl mr-3"></i>
+        <input type="text" name="abonemen" placeholder="Nomor Abonemen (jika ada)" class="w-full outline-none">
+      </div>
+
+      <!-- Email -->
+      <div class="flex items-center bg-white rounded-lg shadow p-3 icon-anim">
+        <i class="ph ph-envelope text-gray-500 text-xl mr-3"></i>
+        <input type="email" name="email" placeholder="Alamat Email" required class="w-full outline-none">
+      </div>
+
+      <!-- Kecepatan Paket -->
+      <div class="bg-white rounded-lg shadow p-4 icon-anim">
+        <label class="block font-medium text-gray-700 mb-2">Pilih Kecepatan Paket</label>
+        <div class="space-y-2 text-gray-700">
+          <label><input type="radio" name="paket" value="10Mbps Rp.150.000" required> 10Mbps – Rp150.000</label><br>
+          <label><input type="radio" name="paket" value="20Mbps Rp.200.000"> 20Mbps – Rp200.000</label><br>
+          <label><input type="radio" name="paket" value="30Mbps Rp.250.000"> 30Mbps – Rp250.000</label><br>
+          <label><input type="radio" name="paket" value="50Mbps Rp.300.000"> 50Mbps – Rp300.000</label>
+        </div>
+      </div>
+
+      <!-- Lokasi -->
+      <div class="flex items-center bg-white rounded-lg shadow p-3 icon-anim">
+        <i class="ph ph-map-pin text-gray-500 text-xl mr-3"></i>
+        <input type="url" name="lokasi" placeholder="Share link lokasi Google Maps" required class="w-full outline-none">
+      </div>
+
+      <!-- Upload KTP -->
+      <div class="bg-white rounded-lg shadow p-4 icon-anim">
+        <label class="block font-medium text-gray-700 mb-2">Upload Foto KTP (max 10MB)</label>
+        <input type="file" accept="image/*" class="block w-full text-sm text-gray-500">
+      </div>
+
+      <!-- Tombol -->
+      <button type="submit"
+        class="w-full bg-gradient-to-r from-orange-500 to-red-500 text-white py-3 rounded-xl font-semibold shadow-lg hover:opacity-90 transition-all pulse">
+        Kirim Pendaftaran
+      </button>
+
+    </form>
+
+    <p id="notif" class="text-center mt-4 text-green-600 font-medium hidden">✅ Formulir berhasil dikirim!</p>
+  </div>
+
+  <script>
+    const form = document.getElementById('daftarForm');
+    const notif = document.getElementById('notif');
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      notif.classList.remove('hidden');
+      form.reset();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
 </body>
 </html>
