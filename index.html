@@ -1,63 +1,112 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form Pendaftaran Instalasi</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Form Registrasi</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif; background:#f6f7f9; margin:0; padding:24px; }
+    .card { max-width: 640px; margin:0 auto; background:#fff; border-radius:12px; box-shadow:0 6px 24px rgba(0,0,0,.07); padding:24px; }
+    h1 { font-size: 22px; margin:0 0 16px; }
+    label { display:block; font-weight:600; margin:12px 0 6px; }
+    input, textarea { width:100%; padding:10px 12px; border:1px solid #d7dbe1; border-radius:8px; background:#fff; outline:none; font-size:14px; }
+    input:focus, textarea:focus { border-color:#3b82f6; box-shadow:0 0 0 3px rgba(59,130,246,.15); }
+    .row { display:flex; gap:12px; }
+    .row .col { flex:1; }
+    .actions { display:flex; align-items:center; gap:12px; margin-top:16px; }
+    button { background:#3b82f6; color:#fff; border:none; padding:10px 16px; border-radius:8px; font-weight:600; cursor:pointer; }
+    button[disabled] { opacity:.6; cursor:not-allowed; }
+    .msg { display:none; padding:10px 12px; border-radius:8px; margin-top:12px; }
+    .msg.ok { background:#ecfdf5; color:#065f46; border:1px solid #a7f3d0; }
+    .msg.err { background:#fef2f2; color:#991b1b; border:1px solid #fecaca; }
+    footer { text-align:center; color:#7a8493; font-size:13px; margin-top:18px; }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Form Pendaftaran Instalasi</h1>
-        <p>Silakan isi detail di bawah ini untuk penjadwalan instalasi.</p>
-        <form id="registration-form">
-            
-            <div class="form-group">
-                <label for="nama_usaha">Nama (Usaha)</label>
-                <input type="text" id="nama_usaha" name="nama_usaha" placeholder="Contoh: Toko Maju Jaya" required>
-            </div>
+  <div class="card">
+    <h1>Form Registrasi</h1>
+    <p>Silakan isi data di bawah ini.</p>
 
-            <div class="form-group">
-                <label for="alamat_instalasi">Alamat Instalasi</label>
-                <textarea id="alamat_instalasi" name="alamat_instalasi" rows="3" placeholder="Jl. Pahlawan No. 123, Kota Surabaya" required></textarea>
-            </div>
-            
-            <div class="form-group">
-                <label for="no_telp">No Telp / WA</label>
-                <input type="tel" id="no_telp" name="no_telp" placeholder="Contoh: 081234567890" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" placeholder="Contoh: email@anda.com" required>
-            </div>
+    <!-- iframe tersembunyi untuk menghindari CORS -->
+    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
 
-            <div class="form-group">
-                <label for="kapasitas">Kapasitas</label>
-                <input type="text" id="kapasitas" name="kapasitas" placeholder="Contoh: 50 Mbps atau 100 Pelanggan" required>
-            </div>
+    <form id="regForm" action="https://script.google.com/macros/s/AKfycbysv4_c7qSNK6f6dNhWz16ZtKwYR4XuIQBsNQTpkpL_YtZEwMmvMprGrbm0BKqvpSA2/exec" method="POST" target="hidden_iframe" autocomplete="on" novalidate>
+      <!-- Honeypot anti-bot -->
+      <input type="text" name="hp" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;opacity:0;height:0;width:0;"/>
 
-            <div class="form-group">
-                <label for="share_lokasi">Share Lokasi (URL Google Maps)</label>
-                <input type="url" id="share_lokasi" name="share_lokasi" placeholder="https://maps.app.goo.gl/contoh" required>
-            </div>
+      <label for="nama_usaha">Nama (Usaha)</label>
+      <input id="nama_usaha" name="nama_usaha" type="text" placeholder="PT/UD/Nama Usaha atau Pribadi" required>
 
-            <div class="form-group">
-                <label for="jenis_instalasi">Jenis Instalasi</label>
-                <select id="jenis_instalasi" name="jenis_instalasi" required>
-                    <option value="" disabled selected>-- Pilih Jenis --</option>
-                    <option value="Instalasi Baru">Instalasi Baru</option>
-                    <option value="Upgrade Perangkat">Upgrade Perangkat</option>
-                    <option value="Perbaikan">Perbaikan</option>
-                    <option value="Lainnya">Lainnya</option>
-                </select>
-            </div>
+      <label for="alamat_instalasi">Alamat instalasi</label>
+      <textarea id="alamat_instalasi" name="alamat_instalasi" rows="3" placeholder="Nama jalan, RT/RW, kelurahan/kecamatan, kota/kabupaten" required></textarea>
 
-            <button type="submit" id="submit-btn">Kirim Pendaftaran</button>
-        </form>
-        <div id="status-message"></div>
-    </div>
+      <div class="row">
+        <div class="col">
+          <label for="telp">No Telp / WA</label>
+          <input id="telp" name="telp" type="tel" inputmode="tel" pattern="[0-9+()\\-\\s]{8,}" placeholder="+62 8xx xxx xxxx" required>
+        </div>
+        <div class="col">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" placeholder="email@contoh.com" required>
+        </div>
+      </div>
 
-    <script src="script.js"></script>
+      <label for="kapasitas">Kapasitas</label>
+      <input id="kapasitas" name="kapasitas" type="text" placeholder="contoh: 2200 VA / 2 kW">
+
+      <label for="share_lokasi">Share lokasi</label>
+      <input id="share_lokasi" name="share_lokasi" type="url" placeholder="Link Google Maps (opsional)">
+
+      <label for="instalasi">Instalasi</label>
+      <input id="instalasi" name="instalasi" type="text" placeholder="Jenis instalasi (mis. baru / upgrade / perbaikan)">
+
+      <div class="actions">
+        <button id="submitBtn" type="submit">Kirim</button>
+        <span id="spinner" style="display:none;">⏳ Mengirim...</span>
+      </div>
+
+      <div id="okMsg" class="msg ok">Terima kasih! Data Anda sudah kami terima.</div>
+      <div id="errMsg" class="msg err">Maaf, terjadi kesalahan. Coba lagi ya.</div>
+    </form>
+
+    <footer>Data tersimpan otomatis ke Google Sheets.</footer>
+  </div>
+
+  <script>
+    const form = document.getElementById('regForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const spinner = document.getElementById('spinner');
+    const okMsg = document.getElementById('okMsg');
+    const errMsg = document.getElementById('errMsg');
+    const iframe = document.getElementById('hidden_iframe');
+
+    let submitted = false;
+
+    form.addEventListener('submit', function (e) {
+      if (!form.checkValidity()) {
+        // Trigger validasi browser
+        e.preventDefault();
+        form.reportValidity();
+        return;
+      }
+      submitted = true;
+      submitBtn.disabled = true;
+      spinner.style.display = 'inline';
+      okMsg.style.display = 'none';
+      errMsg.style.display = 'none';
+    });
+
+    // Iframe load -> anggap permintaan selesai diproses server
+    iframe.addEventListener('load', function () {
+      if (!submitted) return; // abaikan load pertama
+      submitBtn.disabled = false;
+      spinner.style.display = 'none';
+      okMsg.style.display = 'block';
+      errMsg.style.display = 'none';
+      form.reset();
+      submitted = false;
+    });
+  </script>
 </body>
 </html>
