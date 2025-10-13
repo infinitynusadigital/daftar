@@ -1,0 +1,24 @@
+/* Cari blok kode ini */
+input[type="text"],
+input[type="email"],
+input[type="tel"], /* Tambahkan ini jika belum ada */
+input[type="url"],  /* Tambahkan ini jika belum ada */
+textarea {
+    /* ... style yang sudah ada ... */
+}
+
+/* GANTI MENJADI SEPERTI INI */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="url"],
+textarea,
+select { /* <-- Tambahkan select di sini */
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+    background-color: white; /* Tambahan agar di beberapa browser warnanya sama */
+}
