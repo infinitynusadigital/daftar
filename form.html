@@ -244,14 +244,12 @@
 
         <label for="share_lokasi">Share Lokasi (Google Maps)</label>
         <input id="share_lokasi" name="share_lokasi" type="url" placeholder="Link Google Maps (opsional)">
-
-        <label for="instalasi">Jenis Instalasi</label>
-        <input id="instalasi" name="instalasi" type="text" placeholder="Baru / Upgrade / Perbaikan">
-        
         <!-- Add this after the "Jenis Instalasi" input field and before the actions div -->
         <label for="foto_ktp">📷 Upload Foto KTP</label>
         <input type="file" id="foto_ktp" name="foto_ktp" accept="image/*" required>
         <small>Unggah foto KTP Anda (maks 5MB)</small>
+        <label for="instalasi">Jenis Instalasi</label>
+        <input id="instalasi" name="instalasi" type="text" placeholder="Baru / Upgrade / Perbaikan">
 
         <div class="actions">
           <button id="submitBtn" type="submit">Kirim Data</button>
@@ -296,31 +294,7 @@
     });
 
     let submitted = false;
-
-    form.addEventListener('submit', function (e) {
-      if (!form.checkValidity()) {
-        e.preventDefault();
-        form.reportValidity();
-        return;
-      }
-      submitted = true;
-      submitBtn.disabled = true;
-      spinner.style.display = 'inline';
-      okMsg.style.display = 'none';
-      errMsg.style.display = 'none';
-    });
-
-    iframe.addEventListener('load', function () {
-      if (!submitted) return;
-      submitBtn.disabled = false;
-      spinner.style.display = 'none';
-      okMsg.style.display = 'block';
-      errMsg.style.display = 'none';
-      hargaBox.style.display = 'none';
-      form.reset();
-      submitted = false;
-
-  // Add this to the existing <script> section
+ // Add this to the existing <script> section
   
   const fotoKtp = document.getElementById('foto_ktp');
   
@@ -347,6 +321,30 @@
     spinner.style.display = 'inline';
     okMsg.style.display = 'none';
     errMsg.style.display = 'none';
+    form.addEventListener('submit', function (e) {
+      if (!form.checkValidity()) {
+        e.preventDefault();
+        form.reportValidity();
+        return;
+      }
+      submitted = true;
+      submitBtn.disabled = true;
+      spinner.style.display = 'inline';
+      okMsg.style.display = 'none';
+      errMsg.style.display = 'none';
+    });
+
+    iframe.addEventListener('load', function () {
+      if (!submitted) return;
+      submitBtn.disabled = false;
+      spinner.style.display = 'none';
+      okMsg.style.display = 'block';
+      errMsg.style.display = 'none';
+      hargaBox.style.display = 'none';
+      form.reset();
+      submitted = false;
+
+ 
   });
 </script>
 
