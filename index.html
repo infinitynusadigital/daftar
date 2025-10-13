@@ -1,34 +1,62 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Internet Registration Form</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Pendaftaran Instalasi</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h2>Form Registrasi Internet</h2>
-    <form id="registrationForm">
-        <label for="name">Nama Lengkap</label><br>
-        <input type="text" id="name" name="name" required><br><br>
+    <div class="container">
+        <h1>Form Pendaftaran Instalasi</h1>
+        <p>Silakan isi detail di bawah ini untuk penjadwalan instalasi.</p>
+        <form id="registration-form">
+            
+            <div class="form-group">
+                <label for="nama_usaha">Nama (Usaha)</label>
+                <input type="text" id="nama_usaha" name="nama_usaha" placeholder="Contoh: Toko Maju Jaya" required>
+            </div>
 
-        <label for="email">Email</label><br>
-        <input type="email" id="email" name="email" required><br><br>
+            <div class="form-group">
+                <label for="alamat_instalasi">Alamat Instalasi</label>
+                <textarea id="alamat_instalasi" name="alamat_instalasi" rows="3" placeholder="Jl. Pahlawan No. 123, Kota Surabaya" required></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="no_telp">No Telp / WA</label>
+                <input type="tel" id="no_telp" name="no_telp" placeholder="Contoh: 081234567890" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Contoh: email@anda.com" required>
+            </div>
 
-        <label for="whatsapp">Nomor WhatsApp</label><br>
-        <input type="tel" id="whatsapp" name="whatsapp" required><br><br>
+            <div class="form-group">
+                <label for="kapasitas">Kapasitas</label>
+                <input type="text" id="kapasitas" name="kapasitas" placeholder="Contoh: 50 Mbps atau 100 Pelanggan" required>
+            </div>
 
-        <label for="address">Alamat</label><br>
-        <textarea id="address" name="address" rows="4" required></textarea><br><br>
+            <div class="form-group">
+                <label for="share_lokasi">Share Lokasi (URL Google Maps)</label>
+                <input type="url" id="share_lokasi" name="share_lokasi" placeholder="https://maps.app.goo.gl/contoh" required>
+            </div>
 
-        <label for="package">Pilih Paket</label><br>
-        <select id="package" name="package" required>
-            <option value="A">Paket A - 10 Mbps</option>
-            <option value="B">Paket B - 20 Mbps</option>
-            <option value="C">Paket C - 50 Mbps</option>
-        </select><br><br>
+            <div class="form-group">
+                <label for="jenis_instalasi">Jenis Instalasi</label>
+                <select id="jenis_instalasi" name="jenis_instalasi" required>
+                    <option value="" disabled selected>-- Pilih Jenis --</option>
+                    <option value="Instalasi Baru">Instalasi Baru</option>
+                    <option value="Upgrade Perangkat">Upgrade Perangkat</option>
+                    <option value="Perbaikan">Perbaikan</option>
+                    <option value="Lainnya">Lainnya</option>
+                </select>
+            </div>
 
-        <button type="submit">Submit</button>
-    </form>
+            <button type="submit" id="submit-btn">Kirim Pendaftaran</button>
+        </form>
+        <div id="status-message"></div>
+    </div>
 
     <script src="script.js"></script>
 </body>
