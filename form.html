@@ -1,21 +1,9 @@
-<!--
-File: index.html
-Contains: responsive form, automatic dark mode, i18n (id/en), PWA registration, form POST to Apps Script endpoint.
-
-Other files included below in this single document:
-- manifest.json
-- service-worker.js
-- apps-script Code.gs (Google Apps Script server-side handler)
-
-Instructions for deployment are at the bottom of this document.
--->
-
 <!doctype html>
 <html lang="id">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title data-i18n="title">Form Registrasi Internet</title>
+  <title>Form Registrasi Internet</title>
 
   <meta name="description" content="Form registrasi pelanggan internet cepat dan stabil." />
   <meta name="theme-color" content="#2563eb" />
@@ -35,8 +23,6 @@ Instructions for deployment are at the bottom of this document.
       --text: #1e293b;
       --border: #e2e8f0;
     }
-
-    /* Dark mode overrides */
     @media (prefers-color-scheme: dark) {
       :root{
         --bg: linear-gradient(135deg,#0f172a 0%, #071027 100%);
@@ -48,7 +34,6 @@ Instructions for deployment are at the bottom of this document.
       input, textarea, select { background: rgba(255,255,255,0.02); border:1px solid #112233; color:var(--text); }
     }
 
-    /* Basic layout */
     body{ font-family:'Inter',sans-serif; background:var(--bg); margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center; padding:20px; color:var(--text)}
     .container{ width:100%; max-width:760px }
     .card{ background:#fff; border-radius:16px; padding:28px; box-shadow:0 6px 24px rgba(0,0,0,0.07); transition:all .3s }
@@ -67,16 +52,8 @@ Instructions for deployment are at the bottom of this document.
     .msg{ display:none; padding:10px 12px; border-radius:8px; margin-top:12px; text-align:center }
     .msg.ok{ background:#ecfdf5; color:#065f46; border:1px solid #a7f3d0 }
     .msg.err{ background:#fef2f2; color:#991b1b; border:1px solid #fecaca }
-
-    .topbar{ display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:12px }
-    .lang-toggle{ display:flex; gap:8px }
-    .chip{ background:transparent; border:1px solid var(--border); padding:6px 8px; border-radius:8px; cursor:pointer }
-    .chip.active{ background:var(--primary); color:#fff; border-color:var(--primary) }
-
-    footer{ text-align:center; color:#94a3b8; font-size:13px; margin-top:12px }
-
-    /* small helpers */
     .helper{ font-size:13px; color:#475569 }
+    footer{ text-align:center; color:#94a3b8; font-size:13px; margin-top:12px }
   </style>
 </head>
 <body>
@@ -87,7 +64,13 @@ Instructions for deployment are at the bottom of this document.
 
       <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
 
-      <form id="regForm" action="https://script.google.com/macros/s/AKfycbysv4_c7qSNK6f6dNhWz16ZtKwYR4XuIQBsNQTpkpL_YtZEwMmvMprGrbm0BKqvpSA2/exec" method="POST" target="hidden_iframe" novalidate>
+      <form id="regForm" 
+            action="https://script.google.com/macros/s/AKfycbysv4_c7qSNK6f6dNhWz16ZtKwYR4XuIQBsNQTpkpL_YtZEwMmvMprGrbm0BKqvpSA2/exec" 
+            method="POST" 
+            enctype="multipart/form-data"
+            target="hidden_iframe" 
+            novalidate>
+
         <input type="text" name="hp" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;opacity:0;height:0;width:0;"/>
 
         <label for="nama_usaha">✅ Nama (Usaha)</label>
@@ -107,6 +90,10 @@ Instructions for deployment are at the bottom of this document.
           </div>
         </div>
 
+        <label for="ktp_file">📎 Upload Foto KTP</label>
+        <input id="ktp_file" name="ktp_file" type="file" accept="image/*,application/pdf" required>
+        <p class="helper">Unggah foto KTP (JPG/PNG/PDF, maksimal 5MB)</p>
+
         <label for="kapasitas">🔥 Paket Internet</label>
         <select id="kapasitas" name="kapasitas" required>
           <option value="" disabled selected>Pilih paket...</option>
@@ -114,7 +101,7 @@ Instructions for deployment are at the bottom of this document.
           <option value="10 Mbps - Rp.150.000">10 Mbps</option>
           <option value="15 Mbps - Rp.180.000">15 Mbps</option>
           <option value="20 Mbps - Rp.210.000">20 Mbps</option>
-          <option value="30 Mbps- Rp.250.000">30 Mbps</option>
+          <option value="30 Mbps - Rp.250.000">30 Mbps</option>
           <option value="50 Mbps - Rp.300.000">50 Mbps</option>
         </select>
 
@@ -148,14 +135,15 @@ Instructions for deployment are at the bottom of this document.
     const iframe = document.getElementById('hidden_iframe');
     const kapasitasSelect = document.getElementById('kapasitas');
     const hargaBox = document.getElementById('hargaBox');
+    const ktpInput = document.getElementById('ktp_file');
 
     const hargaPaket = {
-      "7 Mbps": "Rp120.000 / bulan",
-      "10 Mbps": "Rp150.000 / bulan",
-      "15 Mbps": "Rp180.000 / bulan",
-      "20 Mbps": "Rp210.000 / bulan",
-      "30 Mbps": "Rp250.000 / bulan",
-      "50 Mbps": "Rp300.000 / bulan"
+      "7 Mbps - Rp.120.000": "Rp120.000 / bulan",
+      "10 Mbps - Rp.150.000": "Rp150.000 / bulan",
+      "15 Mbps - Rp.180.000": "Rp180.000 / bulan",
+      "20 Mbps - Rp.210.000": "Rp210.000 / bulan",
+      "30 Mbps - Rp.250.000": "Rp250.000 / bulan",
+      "50 Mbps - Rp.300.000": "Rp300.000 / bulan"
     };
 
     kapasitasSelect.addEventListener('change', () => {
@@ -168,6 +156,15 @@ Instructions for deployment are at the bottom of this document.
       }
     });
 
+    // Validasi ukuran file
+    ktpInput.addEventListener('change', () => {
+      const file = ktpInput.files[0];
+      if (file && file.size > 5 * 1024 * 1024) {
+        alert("Ukuran file terlalu besar! Maksimal 5MB.");
+        ktpInput.value = "";
+      }
+    });
+
     let submitted = false;
 
     form.addEventListener('submit', function (e) {
@@ -176,6 +173,14 @@ Instructions for deployment are at the bottom of this document.
         form.reportValidity();
         return;
       }
+
+      const file = ktpInput.files[0];
+      if (!file) {
+        e.preventDefault();
+        alert("Mohon unggah foto KTP Anda.");
+        return;
+      }
+
       submitted = true;
       submitBtn.disabled = true;
       spinner.style.display = 'inline';
@@ -193,8 +198,13 @@ Instructions for deployment are at the bottom of this document.
       form.reset();
       submitted = false;
     });
+
+    // PWA registration
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/service-worker.js')
+        .then(() => console.log('✅ Service Worker terdaftar'))
+        .catch(err => console.error('❌ Gagal daftar SW:', err));
+    }
   </script>
 </body>
 </html>
-
-
