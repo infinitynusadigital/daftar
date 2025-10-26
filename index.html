@@ -202,12 +202,12 @@
         <label for="kapasitas">🔥 Paket Internet</label>
         <select id="kapasitas" name="kapasitas" required>
           <option value="" disabled selected>Pilih paket...</option>
-          <option value="7 Mbps">7 Mbps</option>
+          <option value="7 Mbps">5 Mbps</option>
           <option value="10 Mbps">10 Mbps</option>
-          <option value="15 Mbps">15 Mbps</option>
-          <option value="20 Mbps">20 Mbps</option>
-          <option value="30 Mbps">30 Mbps</option>
-          <option value="40 Mbps">40 Mbps</option>
+          <option value="15 Mbps">25 Mbps</option>
+          <option value="20 Mbps">30 Mbps</option>
+          <option value="30 Mbps">40 Mbps</option>
+          <option value="40 Mbps">50 Mbps</option>
         </select>
 
         <div id="hargaBox" class="price-box"></div>
@@ -242,12 +242,12 @@
     const hargaBox = document.getElementById('hargaBox');
 
     const hargaPaket = {
-      "7 Mbps": "Rp120.000 / bulan",
-      "10 Mbps": "Rp165.000 / bulan",
-      "15 Mbps": "Rp190.000 / bulan",
-      "20 Mbps": "Rp210.000 / bulan",
-      "30 Mbps": "Rp250.000 / bulan",
-      "40 Mbps": "Rp290.000 / bulan"
+      "5 Mbps": "Rp100.000 / bulan",
+      "10 Mbps": "Rp135.000 / bulan",
+      "20 Mbps": "Rp165.000 / bulan",
+      "30 Mbps": "Rp210.000 / bulan",
+      "40 Mbps": "Rp250.000 / bulan",
+      "50 Mbps": "Rp290.000 / bulan"
     };
 
     kapasitasSelect.addEventListener('change', () => {
