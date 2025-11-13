@@ -1,25 +1,215 @@
-function doPost(e) {
-  try {
-    const ss = SpreadsheetApp.openById('PASTE_SHEET_ID_KAMU_DI_SINI');
-    const sheet = ss.getSheetByName('Form Registrasi') || ss.insertSheet('Form Registrasi');
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Form Registrasi Internet</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-light: #3b82f6;
+      --bg: linear-gradient(135deg, #e0f2fe 0%, #f8fafc 100%);
+      --text: #1e293b;
+      --border: #e2e8f0;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      margin: 0; padding: 0;
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .container { width: 100%; max-width: 600px; padding: 20px; }
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.07);
+      padding: 32px 28px;
+      transition: all 0.3s ease;
+    }
+    .card:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,0.08); }
+    h1 { font-size: 22px; font-weight: 600; color: var(--text); text-align: center; margin-bottom: 12px; }
+    p { text-align: center; color: #64748b; margin-bottom: 24px; font-size: 14px; }
+    label { display: block; font-weight: 500; color: var(--text); margin: 12px 0 6px; }
+    input, textarea, select {
+      width: 100%; padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px; font-size: 14px;
+      background: #fff; transition: all 0.2s ease;
+    }
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37,99,235,0.15);
+      outline: none;
+    }
+    .row { display: flex; gap: 12px; flex-wrap: wrap; }
+    .row .col { flex: 1; min-width: 100%; }
+    @media (min-width: 480px) { .row .col { min-width: calc(50% - 6px); } }
+    .price-box {
+      display: none;
+      background: #f9fafb;
+      border: 1px dashed #cbd5e1;
+      padding: 10px 12px;
+      border-radius: 8px;
+      margin-top: 8px;
+      font-weight: 600;
+      color: var(--text);
+      font-size: 15px;
+    }
+    .actions {
+      display: flex; align-items: center; justify-content: center;
+      gap: 12px; margin-top: 20px;
+    }
+    button {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 15px;
+    }
+    button:hover { background: var(--primary-light); transform: scale(1.02); }
+    button[disabled] { opacity: 0.6; cursor: not-allowed; transform: none; }
+    .msg {
+      display: none;
+      padding: 10px 12px;
+      border-radius: 8px;
+      margin-top: 12px;
+      text-align: center;
+      font-weight: 500;
+    }
+    .msg.ok { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; }
+    .msg.err { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
+    footer { text-align: center; color: #94a3b8; font-size: 13px; margin-top: 18px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>✅ Form Registrasi Pelanggan</h1>
+      <p>Isi data di bawah ini untuk berlangganan layanan internet.</p>
 
-    const data = e.parameter;
-    const timestamp = new Date();
+      <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
 
-    sheet.appendRow([
-      timestamp,
-      data.nama_usaha || '',
-      data.alamat_instalasi || '',
-      data.telp || '',
-      data.email || '',
-      data.kapasitas || '',
-      data.share_lokasi || '',
-      data.instalasi || '',
-      data.catatan || ''
-    ]);
+      <form id="regForm" action="https://script.google.com/macros/s/AKfycbysv4_c7qSNK6f6dNhWz16ZtKwYR4XuIQBsNQTpkpL_YtZEwMmvMprGrbm0BKqvpSA2/exec" method="POST" target="hidden_iframe" novalidate>
+        <input type="text" name="hp" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;opacity:0;height:0;width:0;"/>
 
-    return ContentService
-      .createTextOutput(JSON.stringify({ status: 'success' }))
-      .setMimeType(ContentService.MimeType.JSON);
+        <label for="nama_usaha">✅ Nama (Usaha)</label>
+        <input id="nama_usaha" name="nama_usaha" type="text" placeholder="Nama Usaha atau Pribadi" required>
 
-  } catch (err) {
+        <label for="alamat_instalasi">✅ Alamat Instalasi</label>
+        <textarea id="alamat_instalasi" name="alamat_instalasi" rows="3" placeholder="Nama jalan, RT/RW, Kelurahan, Kecamatan, Kota" required></textarea>
+
+        <div class="row">
+          <div class="col">
+            <label for="telp">✅ No Telp / WA</label>
+            <input id="telp" name="telp" type="tel" placeholder="+62 8xx xxx xxxx" required>
+          </div>
+          <div class="col">
+            <label for="email">✅ Email</label>
+            <input id="email" name="email" type="email" placeholder="nama@gmail.com" required>
+          </div>
+        </div>
+
+        <label for="kapasitas">🔥 Paket Internet</label>
+        <select id="kapasitas" name="kapasitas" required>
+          <option value="" disabled selected>Pilih paket...</option>
+          <option value="5 Mbps">5 Mbps</option>
+          <option value="8 Mbps">8 Mbps</option>
+          <option value="10 Mbps">10 Mbps</option>
+          <option value="20 Mbps">20 Mbps</option>
+          <option value="30 Mbps">30 Mbps</option>
+          <option value="50 Mbps">50 Mbps</option>
+          <option value="100 Mbps">100 Mbps</option>
+          <option value="200 Mbps">200 Mbps</option>
+          <option value="300 Mbps">300 Mbps</option>
+        </select>
+
+        <div id="hargaBox" class="price-box"></div>
+
+        <label for="share_lokasi">Share Lokasi (Google Maps)</label>
+        <input id="share_lokasi" name="share_lokasi" type="url" placeholder="Link Google Maps (opsional)">
+
+        <label for="instalasi">Jenis Instalasi</label>
+        <input id="instalasi" name="instalasi" type="text" placeholder="Baru / Upgrade / Perbaikan">
+
+        <label for="catatan">📝 Catatan Tambahan (opsional)</label>
+        <textarea id="catatan" name="catatan" rows="2" placeholder="Misal: mohon hubungi sore hari, atau detail arah lokasi"></textarea>
+
+        <div class="actions">
+          <button id="submitBtn" type="submit">Kirim Data</button>
+          <span id="spinner" style="display:none;">⏳ Mengirim...</span>
+        </div>
+
+        <div id="okMsg" class="msg ok">✅ Terima kasih! Data Anda sudah kami terima.</div>
+        <div id="errMsg" class="msg err">❌ Maaf, terjadi kesalahan. Coba lagi ya.</div>
+      </form>
+
+      <footer>© 2025 Covernet | Data otomatis tersimpan ke Sistem Kami</footer>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('regForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const spinner = document.getElementById('spinner');
+    const okMsg = document.getElementById('okMsg');
+    const errMsg = document.getElementById('errMsg');
+    const iframe = document.getElementById('hidden_iframe');
+    const kapasitasSelect = document.getElementById('kapasitas');
+    const hargaBox = document.getElementById('hargaBox');
+
+    // 💰 Daftar harga paket
+    const hargaPaket = {
+      "5 Mbps": "Rp80.000 / bulan",
+      "8 Mbps": "Rp120.000 / bulan",
+      "10 Mbps": "Rp150.000 / bulan",
+      "20 Mbps": "Rp180.000 / bulan",
+      "30 Mbps": "Rp250.000 / bulan",
+      "50 Mbps": "Rp340.000 / bulan",
+      "100 Mbps": "Rp450.000 / bulan",
+      "200 Mbps": "Rp650.000 / bulan",
+      "300 Mbps": "Rp850.000 / bulan"
+    };
+
+    kapasitasSelect.addEventListener('change', () => {
+      const paket = kapasitasSelect.value;
+      if (hargaPaket[paket]) {
+        hargaBox.textContent = `💰 Harga: ${hargaPaket[paket]}`;
+        hargaBox.style.display = 'block';
+      } else {
+        hargaBox.style.display = 'none';
+      }
+    });
+
+    let submitted = false;
+    form.addEventListener('submit', function (e) {
+      if (!form.checkValidity()) {
+        e.preventDefault();
+        form.reportValidity();
+        return;
+      }
+      submitted = true;
+      submitBtn.disabled = true;
+      spinner.style.display = 'inline';
+      okMsg.style.display = 'none';
+      errMsg.style.display = 'none';
+    });
+
+    iframe.addEventListener('load', function () {
+      if (!submitted) return;
+      submitBtn.disabled = false;
+      spinner.style.display = 'none';
+      okMsg.style.display = 'block';
+      errMsg.style.display = 'none';
+      hargaBox.style.display = 'none';
+      form.reset();
+      submitted = false;
+    });
+  </script>
+</body>
+</html>
