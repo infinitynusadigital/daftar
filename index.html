@@ -1,209 +1,110 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Form Registrasi Internet</title>
-
-  <meta name="description" content="Form registrasi pelanggan internet cepat dan stabil." />
-  <meta name="theme-color" content="#2563eb" />
-
-  <!-- PWA manifest -->
-  <link rel="manifest" href="/manifest.json">
-  <link rel="icon" href="/icons/icon-192.png">
-
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Formulir Pendaftaran Internet - covernet.id</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <style>
-    :root{
-      --primary: #2563eb;
-      --primary-light: #3b82f6;
-      --bg: linear-gradient(135deg,#e0f2fe 0%,#f8fafc 100%);
-      --text: #1e293b;
-      --border: #e2e8f0;
+    body { background-color: #0e141b; color: white; font-family: 'Inter', sans-serif; }
+    input, textarea, select {
+      background-color: #111827;
+      color: white;
+      border: 1px solid #f97316;
+      border-radius: 0.5rem;
+      padding: 0.75rem;
+      width: 100%;
     }
-    @media (prefers-color-scheme: dark) {
-      :root{
-        --bg: linear-gradient(135deg,#0f172a 0%, #071027 100%);
-        --text: #e6eef8;
-        --border: #0b1220;
-      }
-      body { background: var(--bg); }
-      .card { background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)); box-shadow: 0 6px 24px rgba(2,6,23,0.6); }
-      input, textarea, select { background: rgba(255,255,255,0.02); border:1px solid #112233; color:var(--text); }
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: #fb923c;
+      box-shadow: 0 0 0 2px #fb923c40;
     }
-
-    body{ font-family:'Inter',sans-serif; background:var(--bg); margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center; padding:20px; color:var(--text)}
-    .container{ width:100%; max-width:760px }
-    .card{ background:#fff; border-radius:16px; padding:28px; box-shadow:0 6px 24px rgba(0,0,0,0.07); transition:all .3s }
-    .row{ display:flex; gap:12px; flex-wrap:wrap }
-    .row .col{ flex:1; min-width:100% }
-    @media(min-width:640px){ .row .col{ min-width:calc(50% - 6px) } }
-    h1{ font-size:20px; margin:0 0 8px }
-    p{ margin:0 0 16px; color:#64748b }
-    label{ display:block; margin:10px 0 6px; font-weight:600 }
-    input,textarea,select{ width:100%; padding:10px 12px; border-radius:10px; border:1px solid var(--border); font-size:14px }
-    input:focus,textarea:focus,select:focus{ outline:none; box-shadow:0 0 0 3px rgba(37,99,235,0.12); border-color:var(--primary) }
-    .price-box{ display:none; margin-top:8px; padding:10px 12px; border-radius:8px; background:#f9fafb; border:1px dashed #cbd5e1; font-weight:600 }
-    .actions{ display:flex; gap:12px; align-items:center; justify-content:center; margin-top:18px }
-    button{ background:var(--primary); color:#fff; border:none; padding:12px 18px; border-radius:10px; cursor:pointer; font-weight:700 }
-    button[disabled]{ opacity:.6; cursor:not-allowed }
-    .msg{ display:none; padding:10px 12px; border-radius:8px; margin-top:12px; text-align:center }
-    .msg.ok{ background:#ecfdf5; color:#065f46; border:1px solid #a7f3d0 }
-    .msg.err{ background:#fef2f2; color:#991b1b; border:1px solid #fecaca }
-    .helper{ font-size:13px; color:#475569 }
-    footer{ text-align:center; color:#94a3b8; font-size:13px; margin-top:12px }
+    button {
+      background-color: #f97316;
+      color: white;
+      font-weight: bold;
+      padding: 0.75rem;
+      border-radius: 0.5rem;
+      width: 100%;
+      transition: background 0.2s;
+    }
+    button:hover { background-color: #ea580c; }
   </style>
 </head>
-<body>
-  <div class="container">
-    <div class="card">
-      <h1>✅ Form Registrasi Pelanggan</h1>
-      <p>Isi data di bawah ini untuk berlangganan layanan internet.</p>
+<body class="flex items-center justify-center min-h-screen p-4">
+  <div class="w-full max-w-md bg-[#111827] p-6 rounded-2xl shadow-xl border border-gray-700">
+    <h2 class="text-2xl font-bold text-center mb-2 text-orange-400">Formulir Pendaftaran Internet</h2>
+    <p class="text-center text-sm mb-6 text-gray-400">PT Infinity Nusa Digital</p>
 
-      <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+    <!-- FORM TANPA FETCH, LANGSUNG KE GOOGLE SCRIPT -->
+    <form action="https://script.google.com/macros/s/AKfycbylNUlbItKD7xPNIfTFKc6skrAwHkeAemw2J8s0_2ybO0Tc-wp8kLFKHQKUFjk6TDrR/exec"
+          method="POST"
+          target="_self"
+          onsubmit="return showSuccessMessage()"
+          class="space-y-4">
 
-      <form id="regForm" 
-            action="https://script.google.com/macros/s/AKfycbysv4_c7qSNK6f6dNhWz16ZtKwYR4XuIQBsNQTpkpL_YtZEwMmvMprGrbm0BKqvpSA2/exec" 
-            method="POST" 
-            enctype="multipart/form-data"
-            target="hidden_iframe" 
-            novalidate>
+      <div>
+        <label>Nama (Usaha / Pemilik)</label>
+        <input type="text" name="Nama (Usaha)" required placeholder="Nama usaha / pemilik" />
+      </div>
 
-        <input type="text" name="hp" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;opacity:0;height:0;width:0;"/>
+      <div>
+        <label>Alamat Instalasi</label>
+        <textarea name="Alamat instalasi" required placeholder="Jl. Contoh No. 123, Kota"></textarea>
+      </div>
 
-        <label for="nama_usaha">✅ Nama (Usaha)</label>
-        <input id="nama_usaha" name="nama_usaha" type="text" placeholder="Nama Usaha atau Pribadi" required>
+      <div>
+        <label>No. Telp / WA</label>
+        <input type="text" name="No Telp / WA" required placeholder="+62..." />
+      </div>
 
-        <label for="alamat_instalasi">✅ Alamat Instalasi</label>
-        <textarea id="alamat_instalasi" name="alamat_instalasi" rows="3" placeholder="Nama jalan, RT/RW, Kelurahan, Kecamatan, Kota" required></textarea>
+      <div>
+        <label>Email</label>
+        <input type="email" name="Email" required placeholder="email@domain.com" />
+      </div>
 
-        <div class="row">
-          <div class="col">
-            <label for="telp">✅ No Telp / WA</label>
-            <input id="telp" name="telp" type="tel" placeholder="+62 8xx xxx xxxx" required>
-          </div>
-          <div class="col">
-            <label for="email">✅ Email</label>
-            <input id="email" name="email" type="email" placeholder="nama@gmail.com" required>
-          </div>
-        </div>
-
-        <label for="ktp_file">📎 Upload Foto KTP</label>
-        <input id="ktp_file" name="ktp_file" type="file" accept="image/*,application/pdf" required>
-        <p class="helper">Unggah foto KTP (JPG/PNG/PDF, maksimal 5MB)</p>
-
-        <label for="kapasitas">🔥 Paket Internet</label>
-        <select id="kapasitas" name="kapasitas" required>
-          <option value="" disabled selected>Pilih paket...</option>
-          <option value="7 Mbps - Rp.120.000">7 Mbps</option>
-          <option value="10 Mbps - Rp.150.000">10 Mbps</option>
-          <option value="15 Mbps - Rp.180.000">15 Mbps</option>
-          <option value="20 Mbps - Rp.210.000">20 Mbps</option>
-          <option value="30 Mbps - Rp.250.000">30 Mbps</option>
-          <option value="50 Mbps - Rp.300.000">50 Mbps</option>
+      <div>
+        <label>Kapasitas Paket</label>
+        <select name="Kapasitas" required class="bg-[#1f2937] text-white">
+          <option value="">Pilih kapasitas</option>
+          <option>10 Mbps</option>
+          <option>20 Mbps</option>
+          <option>50 Mbps</option>
+          <option>100 Mbps</option>
         </select>
+      </div>
 
-        <div id="hargaBox" class="price-box"></div>
+      <div>
+        <label>Share Lokasi (Link Google Maps)</label>
+        <input type="url" name="Share lokasi" placeholder="https://goo.gl/maps/..." />
+      </div>
 
-        <label for="share_lokasi">Share Lokasi (Google Maps)</label>
-        <input id="share_lokasi" name="share_lokasi" type="url" placeholder="Link Google Maps (opsional)">
+      <div>
+        <label>Instalasi</label>
+        <input type="text" name="Instalasi" placeholder="Disesuaikan" />
+      </div>
 
-        <label for="instalasi">Jenis Instalasi</label>
-        <input id="instalasi" name="instalasi" type="text" placeholder="Baru / Upgrade / Perbaikan">
+      <button type="submit">Kirim Pendaftaran</button>
+    </form>
 
-        <div class="actions">
-          <button id="submitBtn" type="submit">Kirim Data</button>
-          <span id="spinner" style="display:none;">⏳ Mengirim...</span>
-        </div>
-
-        <div id="okMsg" class="msg ok">✅ Terima kasih! Data Anda sudah kami terima.</div>
-        <div id="errMsg" class="msg err">❌ Maaf, terjadi kesalahan. Coba lagi ya.</div>
-      </form>
-
-      <footer>© 2025 covernet | Data otomatis tersimpan ke Sistem Kami</footer>
-    </div>
+    <p class="text-xs text-center text-gray-500 mt-6">
+      © 2025 PT Infinity Nusa Digital – Business
+    </p>
   </div>
 
   <script>
-    const form = document.getElementById('regForm');
-    const submitBtn = document.getElementById('submitBtn');
-    const spinner = document.getElementById('spinner');
-    const okMsg = document.getElementById('okMsg');
-    const errMsg = document.getElementById('errMsg');
-    const iframe = document.getElementById('hidden_iframe');
-    const kapasitasSelect = document.getElementById('kapasitas');
-    const hargaBox = document.getElementById('hargaBox');
-    const ktpInput = document.getElementById('ktp_file');
-
-    const hargaPaket = {
-      "7 Mbps - Rp.120.000": "Rp120.000 / bulan",
-      "10 Mbps - Rp.150.000": "Rp150.000 / bulan",
-      "15 Mbps - Rp.180.000": "Rp180.000 / bulan",
-      "20 Mbps - Rp.210.000": "Rp210.000 / bulan",
-      "30 Mbps - Rp.250.000": "Rp250.000 / bulan",
-      "50 Mbps - Rp.300.000": "Rp300.000 / bulan"
-    };
-
-    kapasitasSelect.addEventListener('change', () => {
-      const paket = kapasitasSelect.value;
-      if (hargaPaket[paket]) {
-        hargaBox.textContent = `💰 Harga: ${hargaPaket[paket]}`;
-        hargaBox.style.display = 'block';
-      } else {
-        hargaBox.style.display = 'none';
-      }
-    });
-
-    // Validasi ukuran file
-    ktpInput.addEventListener('change', () => {
-      const file = ktpInput.files[0];
-      if (file && file.size > 5 * 1024 * 1024) {
-        alert("Ukuran file terlalu besar! Maksimal 5MB.");
-        ktpInput.value = "";
-      }
-    });
-
-    let submitted = false;
-
-    form.addEventListener('submit', function (e) {
-      if (!form.checkValidity()) {
-        e.preventDefault();
-        form.reportValidity();
-        return;
-      }
-
-      const file = ktpInput.files[0];
-      if (!file) {
-        e.preventDefault();
-        alert("Mohon unggah foto KTP Anda.");
-        return;
-      }
-
-      submitted = true;
-      submitBtn.disabled = true;
-      spinner.style.display = 'inline';
-      okMsg.style.display = 'none';
-      errMsg.style.display = 'none';
-    });
-
-    iframe.addEventListener('load', function () {
-      if (!submitted) return;
-      submitBtn.disabled = false;
-      spinner.style.display = 'none';
-      okMsg.style.display = 'block';
-      errMsg.style.display = 'none';
-      hargaBox.style.display = 'none';
-      form.reset();
-      submitted = false;
-    });
-
-    // PWA registration
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/service-worker.js')
-        .then(() => console.log('✅ Service Worker terdaftar'))
-        .catch(err => console.error('❌ Gagal daftar SW:', err));
+    function showSuccessMessage() {
+      Swal.fire({
+        icon: 'success',
+        title: 'Pendaftaran Berhasil!',
+        text: 'Data Anda telah terkirim ke sistem kami.',
+        confirmButtonColor: '#f97316',
+        background: '#1f2937',
+        color: '#fff',
+      });
+      return true; // tetap kirim form
     }
   </script>
 </body>
